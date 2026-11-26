@@ -593,13 +593,13 @@ footer li + li { margin-top: 10px; }
       freqLabel: "Zondagen per jaar", durLabel: "Dienst, koffie en napraten",
       discAllowed: false, disc: false, zone: "A1",
       receiptTitle: "KERKBEZOEK", stamp: "Amen",
-      bike: "Op de fiets naar de kerk: <b>€ 0</b>. Bidden voor droog weer is ook nog gratis.",
+      bike: "Op de fiets naar de kerk: <b>€ 0</b>. En je bent op tijd voor het eerste lied.",
       u: {
         title: "Naor de kerk", sub: "Dienst, een bakkie na afloop en nog effe kletse bij de deur. Buite loopt de meter mee.",
         carsLabel: "Auto's van de kerkgangers",
         carsHint: "Op 1 voor je eige auto, of schuif door voor de hele gemeente.",
         freqLabel: "Zondage per jaor", durLabel: "Dienst, bakkie en nakletse",
-        bike: "Op de fiets naor de kerk: <b>€ 0</b>. Bidde voor droog weer is oak nog gratis.",
+        bike: "Op de fiets naor de kerk: <b>€ 0</b>. En je ben op tijd voor ut eerste lied.",
         items: [["keer € 2 in de collectezak", 2, "keer € 2 in de collectezak", "doen"]]
       },
       items: [
@@ -791,8 +791,8 @@ footer li + li { margin-top: 10px; }
       if (y < 200) return L("Een kleine offerande aan de parkeerautomaat.", "Een klein offertje aon de parkeerautomaat.");
       if (y < 1000) return L("Trouw naar de kerk kost je straks " + eur0.format(y) + " per jaar. Aan de automaat, niet aan de collecte.",
                              "Trouw naor de kerk kost je straks " + eur0.format(y) + " per jaor. Aon de automaat, nie aon de collecte.");
-      if (state.cars > 1) return L("Samen betaalt de kerkgemeente " + eur0.format(y) + " per jaar om te mogen zingen. Een flinke collecte, alleen niet voor de kerk.",
-                                   "Same betaolt de kerkgemeente " + eur0.format(y) + " per jaor om te motte zinge. Flinke collecte, maor nie voor de kerk.");
+      if (state.cars > 1) return L("De kerkgemeente betaalt samen " + eur0.format(y) + " per jaar om naar de kerk te gaan. Een flinke collecte, alleen niet voor de kerk.",
+                                   "De kerkgemeente betaolt same " + eur0.format(y) + " per jaor om naor de kerk te gaon. Flinke collecte, maor nie voor de kerk.");
       return L("Jij alleen betaalt " + eur0.format(y) + " per jaar. Dat is geen collecte meer, dat is een abonnement.",
                "Jij alleen betaolt " + eur0.format(y) + " per jaor. Da's geen collecte meer, da's een abonnement.");
     }
