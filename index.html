@@ -227,6 +227,21 @@ details.tarief .row2 { margin-top: 10px; }
 }
 .btn.ghost { background: transparent; color: var(--sign); }
 .toast { font-size: 14px; color: var(--ok); align-self: center; }
+.cta {
+  margin-top: 16px; padding: 18px;
+  background: var(--sign); color: var(--sign-ink);
+  border-radius: 14px; box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+}
+.cta p { margin: 0; font-size: 15px; flex: 1 1 220px; }
+.cta p b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 20px; line-height: 1.2; margin-bottom: 2px; }
+.cta a {
+  flex: none; text-decoration: none; font-weight: 700;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 12px 18px; border-radius: 10px;
+}
+.cta a:hover { filter: brightness(1.05); }
+.cta a:focus-visible { outline: 3px solid var(--sign-ink); outline-offset: 2px; }
 
 /* Info */
 section.info { margin: 40px 0 0; }
@@ -238,7 +253,7 @@ section.info h2 { font-size: 28px; margin-bottom: 14px; }
 table { width: 100%; border-collapse: collapse; font-size: 15px; }
 th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { font-weight: 600; }
-td.num { font-family: "JetBrains Mono", monospace; white-space: nowrap; }
+td.num { font-family: "JetBrains Mono", monospace; }
 .tablecard { overflow-x: auto; }
 
 footer { margin: 40px 0 32px; color: var(--ink-soft); font-size: 14px; }
@@ -353,6 +368,10 @@ footer ul { padding-left: 18px; }
         <button class="btn ghost" id="resetBtn" type="button">Begin opnieuw</button>
         <span class="toast" id="toast" role="status"></span>
       </div>
+      <div class="cta">
+        <p><b id="ctaHead">Vind je dit te gek?</b>Bewoners vragen de gemeenteraad om het parkeerbeleid voor bezoek op zondag te heroverwegen.</p>
+        <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">Teken de petitie</a>
+      </div>
     </div>
   </main>
 
@@ -374,7 +393,7 @@ footer ul { padding-left: 18px; }
       <div class="card">
         <h3>Wie heeft er bezwaar?</h3>
         <ul>
-          <li>Een petitie van een bewoner uit Nieuw Engeland had op 26 november 2026 ruim 1.700 handtekeningen.</li>
+          <li>Een <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">petitie van een bewoner uit Nieuw Engeland</a> had op 26 november 2026 ruim 1.700 handtekeningen.</li>
           <li>Veertien kerken in de binnenstad vroegen de burgemeester per brief om een oplossing.</li>
           <li>Amendementen voor een vrije zondagochtend en voor een uitzondering voor religieuze instellingen haalden het op 12 november niet.</li>
         </ul>
@@ -397,6 +416,7 @@ footer ul { padding-left: 18px; }
       <li><a href="https://www.utrecht.nl/nieuws/nieuwsbericht-gemeente-utrecht/vanaf-1-januari-in-parkeerzone-a1-en-a2-betaald-parkeren-op-zondag-van-900-tot-2300-uur" rel="noopener">Gemeente Utrecht: vanaf 1 januari in A1 en A2 betaald parkeren op zondag van 9.00 tot 23.00 uur</a></li>
       <li><a href="https://www.utrecht.nl/parkeertarieven" rel="noopener">Gemeente Utrecht: parkeertarieven (tarieven 2026)</a></li>
       <li><a href="https://www.duic.nl/nieuws/mobiliteit/61514/vanaf-2027-ook-op-zondag-betaald-parkeren-in-wijken-rond-utrechtse-binnenstad-zorg-krijgt-99-procent-korting" rel="noopener">DUIC: vanaf 2027 ook op zondag betaald parkeren in wijken rond de binnenstad</a></li>
+      <li><a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" rel="noopener">Petities.com: Utrecht, eerlijker parkeerbeleid voor bewoners en bezoekers, en behoud van bereikbaarheid</a></li>
       <li>RTV Utrecht, 25 november 2026: veertien kerken vragen burgemeester om oplossing</li>
     </ul>
   </footer>
@@ -637,6 +657,9 @@ footer ul { padding-left: 18px; }
     }
     vd += '<div class="ctx">' + contextText() + '</div>';
     $("verdict").innerHTML = vd;
+    $("ctaHead").textContent = total > 0
+      ? "Liever " + eur0.format(total) + " aan iets leukers uitgeven?"
+      : "Gratis, maar je buren betalen wel.";
   }
 
   function line(a, b) {
