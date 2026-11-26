@@ -245,13 +245,13 @@ details.tarief .row2 { margin-top: 10px; }
 .receipt .yearly b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: clamp(38px, 11vw, 48px); line-height: 1.05; letter-spacing: -0.02em; }
 .receipt .delta { margin-top: 10px; text-align: center; font-size: 13px; }
 .receipt .barcode {
-  height: 38px; flex: 0 0 52%;
+  height: 38px; flex: 0 0 46%;
   background: repeating-linear-gradient(90deg, #22252c 0 2px, transparent 2px 4px, #22252c 4px 7px, transparent 7px 8px, #22252c 8px 9px, transparent 9px 12px);
   opacity: .85;
 }
 .receipt .rfoot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 18px 0 16px; }
 .receipt .stamp {
-  margin-right: 4px; transform: rotate(-8deg); background: var(--paper); white-space: nowrap;
+  margin-right: 4px; transform: rotate(-8deg); background: var(--paper); text-align: center; max-width: 46%; line-height: 1.05 !important;
   border: 3px solid #c8102e; color: #c8102e; border-radius: 6px; padding: 6px 10px;
   font: 800 16px/1 "Bricolage Grotesque", sans-serif; text-transform: uppercase;
   opacity: .85; mix-blend-mode: multiply; pointer-events: none;
@@ -305,7 +305,7 @@ details.tarief .row2 { margin-top: 10px; }
 .cta p { margin: 0; font-size: 15px; flex: 1 1 220px; }
 .cta p b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 20px; line-height: 1.2; margin-bottom: 2px; }
 .cta a {
-  flex: none; text-decoration: none; font-weight: 700;
+  flex: 0 1 auto; text-decoration: none; font-weight: 700; text-align: center;
   background: var(--accent); color: var(--accent-ink);
   padding: 12px 18px; border-radius: 10px;
 }
@@ -355,6 +355,7 @@ footer li + li { margin-top: 10px; }
   .tabs { gap: 8px; }
   .tab { padding: 10px 8px; align-items: center; text-align: center; }
   .tab small { display: none; }
+  .cta a { flex: 1 1 100%; }
   .tab b { font-size: 16px; }
   .psign { width: 52px; height: 52px; font-size: 36px; }
   header { padding: 20px 0 0; }
@@ -387,7 +388,7 @@ footer li + li { margin-top: 10px; }
   </header>
   <section class="flag" aria-label="Statement">
     <p class="slogan" id="slogan">Visite is geen verdienmodel.</p>
-    <p class="lede">Vanaf 3 januari 2027 betaal je in Utrecht ook op zondag van 09.00 tot 23.00 uur voor parkeren in de binnenstad en de wijken eromheen. Kies je zondag en schrik van je bonnetje. De grap is van ons, de tarieven zijn echt.</p>
+    <p class="lede">Vanaf 3 januari 2027 betaal je in Utrecht ook op zondag voor parkeren in de binnenstad en de wijken eromheen. Van 09.00 tot 23.00 uur. Ook als oma komt. Kies je zondag en bekijk je bonnetje. De grap is van ons, de tarieven zijn echt.</p>
   </section>
 
   <p class="shared" id="shared" hidden>Je kijkt naar het bonnetje van iemand anders. <button type="button" id="ownBtn">Reken je eigen zondag uit</button></p>
@@ -466,12 +467,12 @@ footer li + li { margin-top: 10px; }
       <p id="srSum" class="sr-only" aria-live="polite"></p>
       <div class="verdict" id="verdict"></div>
       <div class="actions">
-        <button class="btn share" id="shareBtn" type="button">Stuur je bonnetje door</button>
+        <button class="btn share" id="shareBtn" type="button">Stuur je bonnetje naar de familie-app</button>
         <span class="toast" id="toast" role="status"></span>
       </div>
       <div class="cta">
         <p><b id="ctaHead">Vind je dit te gek?</b><span id="ctaBody">Bewoners vragen de gemeenteraad om het parkeerbeleid voor bezoek op zondag te heroverwegen.</span></p>
-        <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">Teken de petitie →</a>
+        <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">Teken de petitie (gratis, ook op zondag) →</a>
       </div>
     </div>
   </main>
@@ -480,7 +481,7 @@ footer li + li { margin-top: 10px; }
     <h2>Wat verandert er?</h2>
     <div class="infogrid">
       <div class="card tablecard">
-        <h3>Zondag oud en nieuw</h3>
+        <h3>Zondag nu en straks</h3>
         <table class="flip">
           <thead><tr><th scope="col">Zone</th><th scope="col">Zondag 2026</th><th scope="col">Zondag vanaf 2027</th><th scope="col">Extra betaalde uren</th><th scope="col">Bezoekerskorting</th></tr></thead>
           <tbody>
@@ -490,19 +491,19 @@ footer li + li { margin-top: 10px; }
         </table>
       </div>
       <div class="card">
-        <h3>Wie heeft er bezwaar?</h3>
+        <h3>Wie is er tegen?</h3>
         <ul>
-          <li>Eind 2017 hield de gemeente zelf een <a href="https://utrecht.bestuurlijkeinformatie.nl/Document/View/6cdf4239-6a76-451a-87da-1e31fb8f7ae7" target="_blank" rel="noopener">peiling in acht parkeerrayons rond de binnenstad</a>. In alle zeven rayons met een geldige uitslag stemde een meerderheid tegen betaald parkeren op zondag. In het achtste deden te weinig mensen mee. De zondag bleef toen gratis.</li>
-          <li>Een <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">petitie van een bewoner uit Nieuw Engeland</a> had op 26 november 2026 ruim 1.700 handtekeningen.</li>
+          <li>Eind 2017 vroeg de gemeente het zelf, met een <a href="https://utrecht.bestuurlijkeinformatie.nl/Document/View/6cdf4239-6a76-451a-87da-1e31fb8f7ae7" target="_blank" rel="noopener">peiling in acht parkeerrayons rond de binnenstad</a>. In alle zeven rayons met een geldige uitslag was een meerderheid tegen betaald parkeren op zondag. In het achtste deden te weinig mensen mee. De zondag bleef toen gratis.</li>
+          <li>Een bewoner uit Nieuw Engeland begon een <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">petitie</a>. Op 26 november 2026 stonden er ruim 1.700 handtekeningen onder.</li>
           <li>Veertien kerken in de binnenstad vroegen de burgemeester per brief om een oplossing.</li>
-          <li>Amendementen voor een vrije zondagochtend en voor een uitzondering voor religieuze instellingen haalden het op 12 november niet.</li>
+          <li>Op 12 november 2026 haalden twee amendementen het niet: één voor een vrije zondagochtend en één om een uitzondering voor religieuze instellingen te onderzoeken.</li>
         </ul>
       </div>
       <div class="card">
         <h3>Goed om te weten</h3>
         <ul>
-          <li>Voor mantelzorg, thuiszorg en kraamzorg gaat de korting in de hele stad naar 99%, als je de regeling gebruikt.</li>
-          <li>Naar de kerk: je bent geen bezoek van een bewoner, dus je krijgt geen bezoekerskorting.</li>
+          <li>Voor mantelzorg, thuiszorg en kraamzorg is de korting in de hele stad 99%, als je de regeling gebruikt. Zorg is dus bijna gratis. Gezelligheid niet.</li>
+          <li>Ga je naar de kerk? Dan ben je geen bezoek van een bewoner. Je krijgt dus geen bezoekerskorting.</li>
           <li>Na 23.00 uur en voor 09.00 uur parkeer je gratis. Een nachtelijk feest wordt dus vanzelf goedkoper.</li>
         </ul>
       </div>
@@ -510,7 +511,7 @@ footer li + li { margin-top: 10px; }
   </section>
 
   <footer>
-    <p><b>Dit is een ludieke rekentool, geen officiële berekening.</b> De tool is niet van de gemeente Utrecht. Bedragen zijn indicatief: per auto, alleen binnen de betaaltijden, zonder grens op kortingsuren en zonder transactiekosten van parkeerapps. Prijzen van taart, chips en bloemen zijn ronde middenprijzen uit supermarkten in november 2026. Ze verschillen per winkel en per week.</p>
+    <p><b>Dit is een ludieke rekentool, geen officiële berekening.</b> Deze site is niet van de gemeente Utrecht en spreekt niet namens de gemeente. Het bonnetje is geen echte bon: je hoeft niets te betalen. Bedragen zijn een schatting: per auto, alleen binnen de betaaltijden, zonder grens op kortingsuren en zonder kosten van parkeerapps. Prijzen van taart, chips en bloemen zijn ronde middenprijzen uit supermarkten in november 2026. Ze verschillen per winkel en per week.</p>
     <p><button class="themebtn" id="themeBtn" type="button">Licht / donker</button></p>
     <p>Bronnen:</p>
     <ul>
@@ -541,13 +542,13 @@ footer li + li { margin-top: 10px; }
   var SCENARIOS = {
     feest: {
       title: "Je verjaardag",
-      sub: "Iedereen komt op zondag, want dan heeft iedereen tijd. Tot nu toe.",
-      carsLabel: "Gasten met auto",
-      carsHint: "Tel auto's, niet mensen. Tante en oom in één auto is één auto.",
+      sub: "Op zondag kan iedereen. Vanaf 2027 betaalt ook iedereen.",
+      carsLabel: "Auto's van je gasten",
+      carsHint: "Tel auto's, geen mensen. Tante en oom in één auto is één auto. Carpoolen is het nieuwe cadeau.",
       cars: 8, carsMax: 40, start: 14, dur: 4, durMax: 12, freq: 3, freqMax: 12,
-      freqLabel: "Verjaardagen in huis per jaar", durLabel: "Hoe lang duurt het feest",
+      freqLabel: "Verjaardagen in huis per jaar", durLabel: "Tot de laatste gast opstaat",
       discAllowed: true, disc: true, zone: "A2",
-      receiptTitle: "VERJAARDAG", stamp: "Gefeliciteerd",
+      receiptTitle: "VERJAARDAG", stamp: "Lang zal je betalen",
       items: [
         ["grote slagroomtaarten (12 personen)", 18, "grote slagroomtaart (12 personen)"],
         ["zakken chips", 2, "zak chips"]
@@ -555,11 +556,11 @@ footer li + li { margin-top: 10px; }
     },
     kerk: {
       title: "Naar de kerk",
-      sub: "Dienst, koffie na afloop en nog even bijpraten bij de uitgang.",
+      sub: "Dienst, koffie na afloop en nog even bijpraten bij de uitgang. Buiten loopt de meter mee.",
       carsLabel: "Auto's van kerkgangers",
       carsHint: "Zet hem op 1 voor je eigen auto, of schuif door voor de hele gemeente.",
       cars: 1, carsMax: 150, start: 10, dur: 2, durMax: 5, freq: 52, freqMax: 52,
-      freqLabel: "Zondagen per jaar", durLabel: "Dienst plus koffie",
+      freqLabel: "Zondagen per jaar", durLabel: "Dienst, koffie en napraten",
       discAllowed: false, disc: false, zone: "A1",
       receiptTitle: "KERKBEZOEK", stamp: "Amen",
       items: [
@@ -568,15 +569,15 @@ footer li + li { margin-top: 10px; }
     },
     oma: {
       title: "Oma op bezoek",
-      sub: "Ze komt uit Bilthoven en neemt altijd koekjes mee.",
-      carsLabel: "Auto's",
-      carsHint: "Komt opa ook, in zijn eigen auto? Dan zijn het er twee.",
+      sub: "Ze komt uit Bilthoven en neemt altijd koekjes mee. Vanaf 2027 ook de parkeerapp.",
+      carsLabel: "Auto's voor de deur",
+      carsHint: "Komt opa ook, in zijn eigen auto? Dan zijn het er twee. Eén bezoek, twee keer betalen.",
       cars: 1, carsMax: 6, start: 12, dur: 5, durMax: 11, freq: 12, freqMax: 52,
       freqLabel: "Bezoekjes per jaar", durLabel: "Hoe lang blijft oma",
       discAllowed: true, disc: true, zone: "A2",
       receiptTitle: "ZONDAGSE VISITE", stamp: "Oma betaalt",
       items: [
-        ["boeketten uit de supermarkt", 20, "boeket uit de supermarkt"]
+        ["bossen bloemen voor oma", 20, "bos bloemen voor oma"]
       ]
     }
   };
@@ -670,19 +671,20 @@ footer li + li { margin-top: 10px; }
     var s = state.s, n = r.net, y = r.year;
     if (n === 0) {
       return r.hNew === 0
-        ? "Gratis! Je zit helemaal buiten de betaaltijden. Slim gepland, of gewoon heel vroeg op."
-        : "Met een tarief van € 0 is parkeren gratis. Was het maar zo.";
+        ? "Gratis. Je zit helemaal buiten de betaaltijden. Voor 09.00 en na 23.00 uur is gezelligheid nog gratis."
+        : "Tarief € 0. Zo was de zondag in A2 tot nu toe. Dat was fijn.";
     }
     if (s === "feest") {
       if (n < 15) return "Valt mee. Je gasten merken het pas als ze de app openen.";
-      if (n < 60) return "Je visite betaalt samen " + eur0.format(n) + " om jou te feliciteren. Hopelijk is het cadeau dat waard.";
+      if (n < 60) return "Je visite betaalt samen " + eur0.format(n) + " om jou te feliciteren. Dat is een cadeau, alleen niet voor jou.";
       if (n < 150) return "Dit feest kost meer aan parkeergeld dan aan taart. Overweeg een bakfietsservice.";
       return "Gefeliciteerd! De gemeente viert vandaag gezellig met je mee: " + eur0.format(n) + ".";
     }
     if (s === "kerk") {
       if (y < 200) return "Een kleine offerande aan de parkeerautomaat.";
-      if (y < 1000) return "Elke zondag trouw naar de kerk kost je straks " + eur0.format(y) + " per jaar. Amen.";
-      return "Samen betaalt de kerkgemeente " + eur0.format(y) + " per jaar om te mogen zingen. Dat is een flinke collecte, alleen niet voor de kerk.";
+      if (y < 1000) return "Trouw naar de kerk kost je straks " + eur0.format(y) + " per jaar. Aan de automaat, niet aan de collecte.";
+      if (state.cars > 1) return "Samen betaalt de kerkgemeente " + eur0.format(y) + " per jaar om te mogen zingen. Een flinke collecte, alleen niet voor de kerk.";
+      return "Jij alleen betaalt " + eur0.format(y) + " per jaar. Dat is geen collecte meer, dat is een abonnement.";
     }
     if (s === "oma") {
       if (y < 50) return "Oma vindt het prima. Ze mopperde toch al over de parkeerapp.";
@@ -694,9 +696,9 @@ footer li + li { margin-top: 10px; }
 
   function contextText() {
     switch (state.s) {
-      case "kerk": return "Veertien kerken in de binnenstad vroegen de burgemeester om een oplossing. Een amendement om een uitzondering voor religieuze instellingen te onderzoeken werd op 12 november 2026 verworpen.";
-      case "feest": return "Bewoners in A1 en A2 krijgen 50% bezoekerskorting. In de wijken verder van het centrum (zone BC) is dat 95%.";
-      case "oma": return "Met de mantelzorgregeling is de korting 99%. Maar komt oma gewoon gezellig koffie drinken, dan is het 50%.";
+      case "kerk": return "Veertien kerken in de binnenstad vroegen de burgemeester om een oplossing. Een amendement om een uitzondering voor religieuze instellingen te onderzoeken, haalde het op 12 november 2026 niet.";
+      case "feest": return "Woon je zelf in A1 of A2? Dan krijgt je visite 50% korting. Verder van het centrum, in zone BC, is dat 95%. Zelfde taart, ander tarief.";
+      case "oma": return "Komt oma als mantelzorger, dan is de korting 99%. Komt ze voor de gezelligheid, dan is het 50%. Zorg krijgt korting, gezelligheid betaalt.";
     }
     return "";
   }
@@ -737,8 +739,12 @@ footer li + li { margin-top: 10px; }
     if (r.yearOld > 0 && extra > 0.005) {
       rc += '<div class="delta">Dat is ' + eur.format(extra) + (state.freq > 1 ? ' per jaar' : '') + ' meer dan in 2026.</div>';
     }
+    rc += '<hr>';
+    rc += line("Gezelligheid", "€ 0,00");
+    rc += line("Zondagsrust", "uitverkocht");
+    rc += line("Peiling 2017, rayons tegen", "7 van 7");
     rc += '<div class="rfoot" aria-hidden="true"><div class="barcode"></div><div class="stamp">' + (r.net === 0 ? 'Gratis' : sc.stamp) + '</div></div>';
-    rc += '<div class="thanks">Bedankt voor uw bezoek. Tot volgende zondag.</div>';
+    rc += '<div class="thanks">Bedankt voor uw bezoek. Kom gauw weer. Vanaf 09.00 uur.</div>';
     $("receipt").innerHTML = rc;
 
     var total = r.year;
@@ -755,11 +761,11 @@ footer li + li { margin-top: 10px; }
     }
     $("verdict").innerHTML = vd;
     $("ctaHead").textContent = total > 0
-      ? "Liever " + eur0.format(total) + " aan iets leukers uitgeven?"
-      : "Gratis, maar je buren betalen wel.";
-    $("ctaBody").textContent = contextText() + " Op 26 november 2026 stonden er al ruim 1.700 handtekeningen onder de petitie.";
+      ? "Liever " + eur0.format(total) + ({ feest: " aan taart?", kerk: " in de collectezak?", oma: " aan bloemen voor oma?" }[state.s] || " aan iets leukers?")
+      : "Gratis, deze keer. Tussen 09.00 en 23.00 uur betaal je wel.";
+    $("ctaBody").textContent = contextText() + " Ruim 1.700 mensen tekenden de petitie al (stand 26 november 2026). Jij ook?";
     var shown = state.freq > 1 ? r.year : r.net;
-    $("shareBtn").textContent = "Stuur je bonnetje door (" + eur0.format(shown) + (state.freq > 1 ? " per jaar" : "") + ")";
+    $("shareBtn").textContent = "Stuur je bonnetje naar de familie-app (" + eur0.format(shown) + (state.freq > 1 ? " per jaar" : "") + ")";
     $("sbAmt").textContent = eur0.format(shown);
     $("sbSub").textContent = (state.freq > 1 ? "per jaar" : "deze zondag") + " · bonnetje ↓";
   }
@@ -798,11 +804,11 @@ footer li + li { margin-top: 10px; }
     var y = eur0.format(state.freq > 1 ? r.year : r.net);
     var per = state.freq > 1 ? " per jaar" : "";
     switch (state.s) {
-      case "feest": return "Mijn verjaardag kost mijn visite vanaf 2027 " + eur0.format(r.net) + " aan parkeergeld in Utrecht. Wat kost jouw zondag?";
-      case "kerk": return "Elke zondag naar de kerk kost me vanaf 2027 " + y + per + " aan parkeergeld in Utrecht. Amen. Wat kost jouw zondag?";
-      case "oma": return "Oma betaalt vanaf 2027 " + y + per + " aan parkeergeld om mij in Utrecht te zien. Wat kost jouw zondag?";
+      case "feest": return "Mijn visite betaalt vanaf 2027 " + eur0.format(r.net) + " parkeergeld om mij in Utrecht te feliciteren. Wat kost jouw verjaardag?";
+      case "kerk": return "Naar de kerk kost me vanaf 2027 " + y + per + " aan parkeergeld in Utrecht. Amen. Teken je mee?";
+      case "oma": return "Mijn oma betaalt vanaf 2027 " + y + per + " parkeergeld om mij in Utrecht te zien. Wat kost die van jou?";
     }
-    return "Wat kost jouw zondag?";
+    return "Wat kost jouw zondag in Utrecht? Reken het uit en teken de petitie.";
   }
 
   // Begintijden 08.00 tot 22.30
