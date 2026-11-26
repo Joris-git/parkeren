@@ -14,7 +14,3 @@ Open `index.html` in een browser. Er is geen build nodig; alles staat in één b
 - Bedrag = betaalde uren binnen het venster × tarief × aantal auto's × keer per jaar.
 
 Geen officiële berekening en niet van de gemeente Utrecht.
-
-## Toeter
-
-De knop "TOET!" is alleen voor de lol: hij speelt een claxongeluidje en laat een grapje zien. Er wordt niets geteld, opgeslagen of verstuurd. De site is daardoor volledig statisch en draait op elke hosting, ook gratis statische hosting.

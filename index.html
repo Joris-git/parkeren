@@ -248,50 +248,6 @@ details.tarief .row2 { margin-top: 10px; }
 }
 .cta a:hover { filter: brightness(1.05); }
 .cta a:focus-visible { outline: 3px solid var(--sign-ink); outline-offset: 2px; }
-
-/* Toeter */
-.toeter {
-  margin: 36px 0 0;
-  background: var(--accent); color: var(--accent-ink);
-  border-radius: 22px; padding: 28px;
-  display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center;
-  box-shadow: var(--shadow);
-  position: relative; overflow: hidden;
-}
-.toeter::after {
-  content: "P"; position: absolute; right: -10px; bottom: -60px;
-  font: 800 260px/1 "Bricolage Grotesque", sans-serif;
-  color: rgba(0,0,0,.06); pointer-events: none;
-}
-.horn {
-  appearance: none; cursor: pointer; border: 0;
-  width: 168px; height: 168px; border-radius: 50%;
-  background: #1b1d24; color: #ffc42e;
-  font: 800 34px/1 "Bricolage Grotesque", sans-serif;
-  box-shadow: 0 8px 0 #000, 0 14px 24px rgba(0,0,0,.25);
-  transition: transform .08s, box-shadow .08s;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-  position: relative; z-index: 1;
-}
-.horn small { display: block; font: 600 13px/1.2 Inter, sans-serif; color: #f4f1ea; margin-top: 6px; }
-.horn:active, .horn.press { transform: translateY(6px); box-shadow: 0 2px 0 #000, 0 6px 12px rgba(0,0,0,.25); }
-.horn:focus-visible { outline: 4px solid #1b1d24; outline-offset: 4px; }
-.horn.shake { animation: shake .4s; }
-@keyframes shake {
-  0%,100% { rotate: 0deg; } 20% { rotate: -7deg; } 40% { rotate: 6deg; } 60% { rotate: -4deg; } 80% { rotate: 3deg; }
-}
-.toeter-txt { position: relative; z-index: 1; }
-.toeter h2 { font-size: clamp(26px, 4vw, 36px); margin-bottom: 6px; }
-.toeter p { margin: 0 0 10px; max-width: 52ch; }
-.bubble { min-height: 24px; font-weight: 700; margin-top: 10px; }
-.toeter .fine { font-size: 13px; opacity: .8; margin-top: 8px; }
-.toeter .fine a { color: inherit; }
-@media (max-width: 640px) {
-  .toeter { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 24px 18px; gap: 18px; }
-  .toeter p { margin-left: auto; margin-right: auto; }
-}
-@media (prefers-reduced-motion: reduce) { .horn.shake { animation: none; } }
-
 /* Info */
 section.info { margin: 40px 0 0; }
 section.info h2 { font-size: 28px; margin-bottom: 14px; }
@@ -423,16 +379,6 @@ footer ul { padding-left: 18px; }
       </div>
     </div>
   </main>
-
-  <section class="toeter" aria-labelledby="toeterTitle">
-    <button class="horn" id="horn" type="button" aria-describedby="toeterTitle">TOET!<small id="hornSub">Druk hier</small></button>
-    <div class="toeter-txt">
-      <h2 id="toeterTitle">Toeter mee tegen betaald parkeren op zondag</h2>
-      <p>Op zondag hoort het stil te zijn op straat. Behalve nu even. Druk op de toeter en laat even horen wat je ervan vindt.</p>
-      <div class="bubble" id="bubble" role="status"></div>
-      <div class="fine">Toeteren hoort de gemeenteraad helaas niet. Een handtekening wel: <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">teken de petitie</a>.</div>
-    </div>
-  </section>
 
   <section class="info">
     <h2>Wat verandert er?</h2>
@@ -768,43 +714,6 @@ footer ul { padding-left: 18px; }
       done("Delen lukt niet in deze browser");
     }
   });
-
-  // Toeter: alleen voor de lol, er wordt niets geteld of verstuurd.
-  (function () {
-    var horn = $("horn"), bubble = $("bubble"), sub = $("hornSub");
-    var presses = 0;
-    var jokes = [
-      "Getoeterd! De parkeerwachter keek even op.",
-      "De Domtoren heeft je gehoord.",
-      "Rustig aan, het is zondag.",
-      "Toet toet. Dat kost niks, parkeren wel.",
-      "De buren zijn nu ook wakker. Laat ze de petitie tekenen."
-    ];
-    function beep() {
-      try {
-        var AC = window.AudioContext || window.webkitAudioContext;
-        if (!AC) return;
-        var ctx = new AC(), t = ctx.currentTime;
-        [[0, 392], [0.18, 330]].forEach(function (n) {
-          var o = ctx.createOscillator(), g = ctx.createGain();
-          o.type = "square"; o.frequency.value = n[1];
-          g.gain.setValueAtTime(0.0001, t + n[0]);
-          g.gain.exponentialRampToValueAtTime(0.06, t + n[0] + 0.02);
-          g.gain.exponentialRampToValueAtTime(0.0001, t + n[0] + 0.16);
-          o.connect(g); g.connect(ctx.destination);
-          o.start(t + n[0]); o.stop(t + n[0] + 0.18);
-        });
-        setTimeout(function () { ctx.close(); }, 600);
-      } catch (e) {}
-    }
-    horn.addEventListener("click", function () {
-      beep();
-      horn.classList.remove("shake"); void horn.offsetWidth; horn.classList.add("shake");
-      bubble.textContent = jokes[presses % jokes.length];
-      presses++;
-      sub.textContent = "Nog een keer";
-    });
-  })();
 
   // Thema
   $("themeBtn").addEventListener("click", function () {
