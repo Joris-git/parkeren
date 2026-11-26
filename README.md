@@ -1,6 +1,6 @@
 # Wat kost je zondag?
 
-Ludieke rekentool op [visitebelasting.nl](https://visitebelasting.nl): wat kost parkeren op zondag in Utrecht zone A1 en A2 vanaf 1 januari 2027? Kies een verjaardag, kerkbezoek, sportochtend of oma op bezoek en zie het bonnetje.
+Ludieke rekentool op [visitebelasting.nl](https://visitebelasting.nl): wat kost parkeren op zondag in Utrecht zone A1 en A2 vanaf 1 januari 2027? Kies een verjaardag, kerkbezoek of oma op bezoek en zie het bonnetje.
 
 ## Gebruik
 

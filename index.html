@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wat kost je zondag?</title>
-<meta name="description" content="Ludieke rekentool: wat kost parkeren op zondag in Utrecht zone A1 en A2 vanaf 1 januari 2027, voor je verjaardag, kerkbezoek, sport of oma op bezoek.">
+<meta name="description" content="Ludieke rekentool: wat kost parkeren op zondag in Utrecht zone A1 en A2 vanaf 1 januari 2027, voor je verjaardag, kerkbezoek of oma op bezoek.">
 <link rel="canonical" href="https://visitebelasting.nl/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://visitebelasting.nl/">
 <meta property="og:title" content="Wat kost je zondag?">
-<meta property="og:description" content="Reken uit wat je verjaardag, kerkdienst of voetbalochtend kost nu je in Utrecht ook op zondag betaalt voor parkeren.">
+<meta property="og:description" content="Reken uit wat je verjaardag, kerkdienst of zondagse visite kost nu je in Utrecht ook op zondag betaalt voor parkeren.">
 <meta property="og:locale" content="nl_NL">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -109,7 +109,7 @@ h1 { font-size: clamp(32px, 6vw, 54px); font-weight: 800; letter-spacing: -0.02e
 }
 
 /* Scenario tabs */
-.tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 8px 0 20px; }
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 8px 0 20px; }
 .tab {
   appearance: none; cursor: pointer;
   background: var(--surface); color: var(--ink);
@@ -259,7 +259,8 @@ table { width: 100%; border-collapse: collapse; font-size: 15px; }
 th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { font-weight: 600; }
 td.num { font-family: "JetBrains Mono", monospace; }
-.tablecard { overflow-x: auto; }
+.tablecard { grid-column: 1 / -1; }
+table.flip tbody th { font-family: "Bricolage Grotesque", sans-serif; font-size: 16px; }
 
 footer { margin: 40px 0 32px; color: var(--ink-soft); font-size: 14px; }
 footer ul { padding-left: 18px; }
@@ -275,11 +276,21 @@ footer ul { padding-left: 18px; }
   .infogrid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
-  .tabs { grid-template-columns: 1fr 1fr; }
+  .tabs { gap: 8px; }
+  .tab { padding: 10px 8px; align-items: center; text-align: center; }
+  .tab small { display: none; }
+  .tab b { font-size: 16px; }
   .psign { width: 52px; height: 52px; font-size: 36px; }
   .card { padding: 18px; }
   .row2 { grid-template-columns: 1fr; }
-  td.num { white-space: normal; }
+  /* Tabel: elke zone als eigen blok */
+  table.flip thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  table.flip, table.flip tbody, table.flip tr, table.flip th, table.flip td { display: block; width: 100%; }
+  table.flip tr { border: 1px solid var(--line); border-radius: 12px; padding: 4px 12px; margin-bottom: 10px; }
+  table.flip tbody th { border-bottom: 1px solid var(--line); padding: 10px 0 8px; }
+  table.flip td { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; }
+  table.flip td::before { content: attr(data-label); font-family: Inter, sans-serif; color: var(--ink-soft); }
+  table.flip tr td:last-child { border-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
@@ -296,13 +307,12 @@ footer ul { padding-left: 18px; }
         <h1>Wat kost je zondag?</h1>
       </div>
     </div>
-    <p class="lede">In Utrecht betaal je vanaf 1 januari 2027 ook op zondag van 09.00 tot 23.00 uur voor parkeren in zone A1 (binnenstad) en zone A2 (de wijken eromheen). Reken hier uit wat je verjaardag, kerkdienst of voetbalochtend straks kost. Met een knipoog, maar de bedragen zijn echt.</p>
+    <p class="lede">In Utrecht betaal je vanaf 1 januari 2027 ook op zondag van 09.00 tot 23.00 uur voor parkeren in zone A1 (binnenstad) en zone A2 (de wijken eromheen). Reken hier uit wat je verjaardag, kerkdienst of zondagse visite straks kost. Met een knipoog, maar de bedragen zijn echt.</p>
   </header>
 
   <nav class="tabs" role="tablist" aria-label="Kies je zondag">
     <button class="tab" role="tab" data-s="feest"><span class="ico" aria-hidden="true">🎂</span><b>Verjaardag</b><small>Taart, koffie, visite</small></button>
     <button class="tab" role="tab" data-s="kerk"><span class="ico" aria-hidden="true">⛪</span><b>Kerk</b><small>Dienst en koffie na</small></button>
-    <button class="tab" role="tab" data-s="sport"><span class="ico" aria-hidden="true">⚽</span><b>Sport</b><small>Rijden naar de wedstrijd</small></button>
     <button class="tab" role="tab" data-s="oma"><span class="ico" aria-hidden="true">👵</span><b>Oma op bezoek</b><small>Zondagse visite</small></button>
   </nav>
 
@@ -385,13 +395,11 @@ footer ul { padding-left: 18px; }
     <div class="infogrid">
       <div class="card tablecard">
         <h3>Zondag oud en nieuw</h3>
-        <table>
-          <thead><tr><th></th><th>A1</th><th>A2</th></tr></thead>
+        <table class="flip">
+          <thead><tr><th scope="col">Zone</th><th scope="col">Zondag 2026</th><th scope="col">Zondag vanaf 2027</th><th scope="col">Extra betaalde uren</th><th scope="col">Bezoekerskorting</th></tr></thead>
           <tbody>
-            <tr><td>Zondag 2026</td><td class="num">12.00 tot 18.00</td><td class="num">gratis</td></tr>
-            <tr><td>Zondag 2027</td><td class="num">09.00 tot 23.00</td><td class="num">09.00 tot 23.00</td></tr>
-            <tr><td>Extra betaalde uren</td><td class="num">+8</td><td class="num">+14</td></tr>
-            <tr><td>Bezoekerskorting</td><td class="num">50%</td><td class="num">50%</td></tr>
+            <tr><th scope="row">A1 binnenstad</th><td class="num" data-label="Zondag 2026">12.00 tot 18.00</td><td class="num" data-label="Vanaf 2027">09.00 tot 23.00</td><td class="num" data-label="Extra uren">+8</td><td class="num" data-label="Korting bezoek">50%</td></tr>
+            <tr><th scope="row">A2 rond de binnenstad</th><td class="num" data-label="Zondag 2026">gratis</td><td class="num" data-label="Vanaf 2027">09.00 tot 23.00</td><td class="num" data-label="Extra uren">+14</td><td class="num" data-label="Korting bezoek">50%</td></tr>
           </tbody>
         </table>
       </div>
@@ -407,7 +415,7 @@ footer ul { padding-left: 18px; }
         <h3>Goed om te weten</h3>
         <ul>
           <li>Voor mantelzorg, thuiszorg en kraamzorg gaat de korting in de hele stad naar 99%, als je de regeling gebruikt.</li>
-          <li>Kerk en sport: je bent geen bezoek van een bewoner, dus geen bezoekerskorting.</li>
+          <li>Naar de kerk: je bent geen bezoek van een bewoner, dus je krijgt geen bezoekerskorting.</li>
           <li>Na 23.00 uur en voor 09.00 uur parkeer je gratis. Een nachtelijk feest wordt dus vanzelf goedkoper.</li>
         </ul>
       </div>
@@ -415,7 +423,7 @@ footer ul { padding-left: 18px; }
   </section>
 
   <footer>
-    <p><b>Dit is een ludieke rekentool, geen officiële berekening.</b> De tool is niet van de gemeente Utrecht. Bedragen zijn indicatief: per auto, alleen binnen de betaaltijden, zonder grens op kortingsuren en zonder transactiekosten van parkeerapps. Prijzen van taart, chips, voetbalschoenen en bloemen zijn ronde middenprijzen uit supermarkten en sportwinkels in november 2026. Ze verschillen per winkel en per week.</p>
+    <p><b>Dit is een ludieke rekentool, geen officiële berekening.</b> De tool is niet van de gemeente Utrecht. Bedragen zijn indicatief: per auto, alleen binnen de betaaltijden, zonder grens op kortingsuren en zonder transactiekosten van parkeerapps. Prijzen van taart, chips en bloemen zijn ronde middenprijzen uit supermarkten in november 2026. Ze verschillen per winkel en per week.</p>
     <p>Bronnen:</p>
     <ul>
       <li><a href="https://www.utrecht.nl/nieuws/nieuwsbericht-gemeente-utrecht/vanaf-1-januari-in-parkeerzone-a1-en-a2-betaald-parkeren-op-zondag-van-900-tot-2300-uur" rel="noopener">Gemeente Utrecht: vanaf 1 januari in A1 en A2 betaald parkeren op zondag van 9.00 tot 23.00 uur</a></li>
@@ -464,19 +472,6 @@ footer ul { padding-left: 18px; }
       receiptTitle: "KERKBEZOEK",
       items: [
         ["keer de collectezak met € 2", 2]
-      ]
-    },
-    sport: {
-      title: "Sport op zondag",
-      sub: "Thuiswedstrijd van de jeugd. Ouders rijden, de rest moedigt aan.",
-      carsLabel: "Auto's van ouders",
-      carsHint: "Hoeveel ouders rijden er per wedstrijd met de auto?",
-      cars: 4, carsMax: 30, start: 9, dur: 2.5, durMax: 8, freq: 25, freqMax: 40,
-      freqLabel: "Thuiswedstrijden per seizoen", durLabel: "Wedstrijd plus ranja",
-      discAllowed: false, disc: false, zone: "A2",
-      receiptTitle: "SPORTOCHTEND",
-      items: [
-        ["paar kindervoetbalschoenen", 45]
       ]
     },
     oma: {
@@ -585,11 +580,6 @@ footer ul { padding-left: 18px; }
       if (y < 1000) return "Elke zondag trouw naar de kerk kost je straks " + eur0.format(y) + " per jaar. Amen.";
       return "Samen betaalt de gemeente " + eur0.format(y) + " per jaar om te mogen zingen. Dat is een flinke collecte, alleen niet voor de kerk.";
     }
-    if (s === "sport") {
-      if (y < 100) return "Je kind scoort, de parkeerautomaat ook een beetje.";
-      if (y < 600) return "Per seizoen " + eur0.format(y) + " aan parkeergeld. Daar had de club nieuwe ballen van kunnen kopen.";
-      return "Thuisvoordeel bestaat niet meer: " + eur0.format(y) + " per seizoen voor het team.";
-    }
     if (s === "oma") {
       if (y < 50) return "Oma vindt het prima. Ze mopperde toch al over de parkeerapp.";
       if (y < 300) return "Oma betaalt " + eur0.format(y) + " per jaar om jou te zien. Bel haar eens terug.";
@@ -601,7 +591,6 @@ footer ul { padding-left: 18px; }
   function contextText() {
     switch (state.s) {
       case "kerk": return "Veertien kerken in de binnenstad vroegen de burgemeester om een oplossing. Een amendement om een uitzondering voor religieuze instellingen te onderzoeken werd op 12 november 2026 verworpen.";
-      case "sport": return "Een amendement om de zondagochtend vrij te houden, onder meer voor sportverenigingen, werd op 12 november 2026 verworpen.";
       case "feest": return "Bewoners in A1 en A2 krijgen 50% bezoekerskorting. In de wijken verder van het centrum (zone BC) is dat 95%.";
       case "oma": return "Met de mantelzorgregeling is de korting 99%. Maar komt oma gewoon gezellig koffie drinken, dan is het 50%.";
     }
