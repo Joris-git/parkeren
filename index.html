@@ -277,8 +277,6 @@ details.tarief .row2 { margin-top: 10px; }
 .toeter-txt { position: relative; z-index: 1; }
 .toeter h2 { font-size: clamp(26px, 4vw, 36px); margin-bottom: 6px; }
 .toeter p { margin: 0 0 10px; max-width: 52ch; }
-.teller { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: clamp(40px, 7vw, 64px); line-height: 1; letter-spacing: -0.02em; }
-.teller-lbl { font-weight: 600; font-size: 16px; }
 .bubble { min-height: 24px; font-weight: 700; margin-top: 10px; }
 .toeter .fine { font-size: 13px; opacity: .8; margin-top: 8px; }
 .toeter .fine a { color: inherit; }
@@ -424,11 +422,9 @@ footer ul { padding-left: 18px; }
     <button class="horn" id="horn" type="button" aria-describedby="toeterTitle">TOET!<small id="hornSub">Druk hier</small></button>
     <div class="toeter-txt">
       <h2 id="toeterTitle">Toeter mee tegen betaald parkeren op zondag</h2>
-      <p>Op zondag hoort het stil te zijn op straat. Behalve nu even. Eén keer toeteren is genoeg, de buren slapen misschien nog.</p>
-      <div class="teller" id="teller" aria-live="polite">…</div>
-      <div class="teller-lbl" id="tellerLbl">mensen toeteren al mee</div>
+      <p>Op zondag hoort het stil te zijn op straat. Behalve nu even. Druk op de toeter en laat even horen wat je ervan vindt.</p>
       <div class="bubble" id="bubble" role="status"></div>
-      <div class="fine">Dit is een ludieke teller, geen petitie. Wil je dat de gemeenteraad je mening echt meetelt? <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">Teken dan de petitie</a>.</div>
+      <div class="fine">Toeteren hoort de gemeenteraad helaas niet. Een handtekening wel: <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">teken de petitie</a>.</div>
     </div>
   </section>
 
@@ -767,45 +763,17 @@ footer ul { padding-left: 18px; }
     }
   });
 
-  // Toeter-teller. Werkt alleen als api/toeter.php op dezelfde server draait (PHP).
+  // Toeter: alleen voor de lol, er wordt niets geteld of verstuurd.
   (function () {
-    var API = "api/toeter.php";
-    var KEY = "zondag-toeter";
-    var horn = $("horn"), teller = $("teller"), lbl = $("tellerLbl"), bubble = $("bubble"), sub = $("hornSub");
-    var online = false, busy = false, presses = 0;
-    var already = false;
-    try { already = localStorage.getItem(KEY) === "1"; } catch (e) {}
+    var horn = $("horn"), bubble = $("bubble"), sub = $("hornSub");
+    var presses = 0;
     var jokes = [
       "Getoeterd! De parkeerwachter keek even op.",
-      "Nog een keer? Je toetert al. Deel de site maar met je buren.",
-      "Rustig aan, het is zondag.",
       "De Domtoren heeft je gehoord.",
-      "Toet toet. Dat kost niks, parkeren wel."
+      "Rustig aan, het is zondag.",
+      "Toet toet. Dat kost niks, parkeren wel.",
+      "De buren zijn nu ook wakker. Laat ze de petitie tekenen."
     ];
-
-    function show(n) {
-      teller.textContent = new Intl.NumberFormat("nl-NL").format(n);
-      lbl.textContent = n === 1 ? "persoon toetert al mee" : "mensen toeteren al mee";
-    }
-    function offline() {
-      online = false;
-      teller.textContent = "TOET";
-      lbl.textContent = "De teller gaat lopen zodra de site online staat.";
-    }
-    function setDone() {
-      sub.textContent = "Getoeterd";
-    }
-    if (already) setDone();
-
-    if (location.protocol === "file:") {
-      offline();
-    } else {
-      fetch(API, { headers: { "Accept": "application/json" } })
-        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-        .then(function (d) { if (typeof d.count !== "number") throw 0; online = true; show(d.count); })
-        .catch(offline);
-    }
-
     function beep() {
       try {
         var AC = window.AudioContext || window.webkitAudioContext;
@@ -823,35 +791,12 @@ footer ul { padding-left: 18px; }
         setTimeout(function () { ctx.close(); }, 600);
       } catch (e) {}
     }
-
     horn.addEventListener("click", function () {
       beep();
       horn.classList.remove("shake"); void horn.offsetWidth; horn.classList.add("shake");
+      bubble.textContent = jokes[presses % jokes.length];
       presses++;
-      if (already || busy) {
-        bubble.textContent = jokes[1 + (presses % (jokes.length - 1))];
-        return;
-      }
-      if (!online) {
-        bubble.textContent = "Toet! Zodra de site online staat, telt je toeter mee.";
-        return;
-      }
-      busy = true;
-      fetch(API, { method: "POST", headers: { "Accept": "application/json" } })
-        .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-        .then(function (d) {
-          show(d.count);
-          if (!d.counted) {
-            bubble.textContent = "Het is even druk bij de toeter. Probeer het over een minuutje nog eens.";
-            return;
-          }
-          already = true;
-          try { localStorage.setItem(KEY, "1"); } catch (e) {}
-          setDone();
-          bubble.textContent = jokes[0];
-        })
-        .catch(function () { bubble.textContent = "De toeter hapert even. Probeer het later nog eens."; })
-        .then(function () { busy = false; });
+      sub.textContent = "Nog een keer";
     });
   })();
 

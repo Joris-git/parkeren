@@ -15,16 +15,6 @@ Open `index.html` in een browser. Er is geen build nodig; alles staat in één b
 
 Geen officiële berekening en niet van de gemeente Utrecht.
 
-## Toeter-teller
+## Toeter
 
-De knop "TOET!" telt hoeveel bezoekers meetoeteren tegen betaald parkeren op zondag. De teller heeft PHP nodig (vrijwel elk webhostingpakket heeft dat).
-
-- `api/toeter.php` bewaart het totaal in `data/teller.json`.
-- De map `data/` moet schrijfbaar zijn voor de webserver. `data/.htaccess` blokkeert toegang via het web op Apache-servers. Gebruikt je host nginx, laat dan `data/` afschermen of zet de map buiten de webroot.
-- Er wordt niets per bezoeker opgeslagen: geen IP-adressen, geen cookies. De browser onthoudt alleen lokaal dat er al getoeterd is.
-- Per browser telt de eerste klik; daarna geeft de knop alleen nog grapjes.
-- Tegen opdrijven telt de server maximaal 60 toeters per minuut, van alle bezoekers samen. Daarboven krijgt de bezoeker de melding dat het even druk is.
-- Let op: de webserver van je host houdt zelf vaak toegangslogs met IP-adressen bij. Die staan los van de teller. Bij veel hosts kun je ze in het controlepaneel uitzetten of anonimiseren.
-- Zonder PHP (bijvoorbeeld op GitHub Pages of als je het bestand lokaal opent) werkt de knop wel, maar loopt er geen teller.
-
-Het is een ludieke teller, geen petitie. De teller is niet fraudebestendig.
+De knop "TOET!" is alleen voor de lol: hij speelt een claxongeluidje en laat een grapje zien. Er wordt niets geteld, opgeslagen of verstuurd. De site is daardoor volledig statisch en draait op elke hosting, ook gratis statische hosting.
