@@ -19,4 +19,4 @@ Geen officiële berekening en niet van de gemeente Utrecht.
 
 ## Plat Uteregs
 
-Met de knop bovenaan wissel je alle teksten tussen gewoon Nederlands en plat Uteregs. De keuze wordt in de browser onthouden en gaat mee in een gedeelde link (`&taal=utr`). Bedragen, feiten, namen van buurten en titels van bronnen blijven gelijk. De vertaling is een benadering van het dialect, geen officiële spelling.
+Met de knop bovenaan wissel je alle teksten tussen gewoon Nederlands en plat Uteregs. De keuze wordt in de browser onthouden en gaat mee in een gedeelde link (`&taal=utr`). Bedragen, feiten, namen van buurten en titels van bronnen blijven gelijk. De vertaling is een benadering van het dialect, geen officiële spelling. Gebruikte kenmerken, uit bronnen nagezocht: "ao" voor aa (gaot, naor, jaor, betaole), "oa" voor oo (groate), een lange a (mân), weggevallen eind-t (wa, da, nie) en de stadsnaam Utreg. De ij blijft ij: een "ai"-klank is voor Utrecht niet aangetoond. Bronnen: Wikipedia "Stad-Utrechts", Het Utrechts Archief ("Een ode aan het Utregs!") en Zo was Utrecht.
