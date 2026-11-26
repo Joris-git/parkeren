@@ -4,7 +4,9 @@ Ludieke rekentool op [visitebelasting.nl](https://visitebelasting.nl): wat kost 
 
 ## Gebruik
 
-Open `index.html` in een browser. Er is geen build nodig; alles staat in één bestand.
+Open `index.html` in een browser. Er is geen build nodig; alles staat in één bestand, plus `og.png` als deelplaatje (1200 bij 630 pixels) voor WhatsApp en sociale media.
+
+De deelknop maakt een link met de invoer erin (bijvoorbeeld `?s=kerk&z=A1&a=1&t=10&d=2&f=52&k=0`), zodat de ontvanger hetzelfde bonnetje ziet.
 
 ## Rekenregels
 
