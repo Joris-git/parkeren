@@ -22,64 +22,70 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;600&display=swap"></noscript>
 <style>
 :root {
-  --bg: #f4f1ea;
+  --bg: #f8f5f3;
   --surface: #ffffff;
-  --surface-2: #ebe6db;
-  --ink: #1b1d24;
-  --ink-soft: #565b68;
-  --line: #d8d1c2;
-  --sign: #1d4ed8;
+  --surface-2: #f2ece9;
+  --ink: #1a1a1d;
+  --ink-soft: #55555d;
+  --line: #e4dbd7;
+  --sign: #c8102e;
   --sign-ink: #ffffff;
-  --accent: #f5b300;
-  --accent-ink: #1b1d24;
-  --danger: #c2410c;
+  --accent: #c8102e;
+  --accent-ink: #ffffff;
+  --danger: #c8102e;
   --ok: #166534;
-  --focus: #1b1d24;
-  --field-line: #857c6b;
-  --sign-text: #1d4ed8;
-  --paper: #fffdf7;
+  --focus: #1a1a1d;
+  --field-line: #8a7f7b;
+  --sign-text: #b00d27;
+  --poster: #1a1a1d;
+  --poster-ink: #ffffff;
+  --paper: #fffdfa;
   --paper-ink: #22252c;
   --shadow: 0 1px 2px rgba(20,20,30,.06), 0 8px 24px rgba(20,20,30,.08);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #12141a;
-    --surface: #1b1e26;
-    --surface-2: #252935;
-    --ink: #eceef3;
-    --ink-soft: #a3a9b8;
-    --line: #333847;
-    --sign: #3b6cf0;
+    --bg: #141416;
+    --surface: #1e1e22;
+    --surface-2: #29292f;
+    --ink: #f2efef;
+    --ink-soft: #aba6a8;
+    --line: #3a3a41;
+    --sign: #d4213a;
     --sign-ink: #ffffff;
-    --accent: #ffc42e;
-    --accent-ink: #15171d;
-    --danger: #fb923c;
+    --accent: #d4213a;
+    --accent-ink: #ffffff;
+    --danger: #ff8592;
     --ok: #4ade80;
-    --focus: #ffc42e;
-    --field-line: #767c8c;
-    --sign-text: #7ea6ff;
-    --paper: #f3efe4;
+    --focus: #ffffff;
+    --field-line: #7f7b82;
+    --sign-text: #ff8592;
+    --poster: #f2efef;
+    --poster-ink: #1a1a1d;
+    --paper: #f6f1ec;
     --paper-ink: #22252c;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
   }
 }
 :root[data-theme="dark"] {
-  --bg: #12141a;
-  --surface: #1b1e26;
-  --surface-2: #252935;
-  --ink: #eceef3;
-  --ink-soft: #a3a9b8;
-  --line: #333847;
-  --sign: #3b6cf0;
+  --bg: #141416;
+  --surface: #1e1e22;
+  --surface-2: #29292f;
+  --ink: #f2efef;
+  --ink-soft: #aba6a8;
+  --line: #3a3a41;
+  --sign: #d4213a;
   --sign-ink: #ffffff;
-  --accent: #ffc42e;
-  --accent-ink: #15171d;
-  --danger: #fb923c;
+  --accent: #d4213a;
+  --accent-ink: #ffffff;
+  --danger: #ff8592;
   --ok: #4ade80;
-  --focus: #ffc42e;
-  --field-line: #767c8c;
-  --sign-text: #7ea6ff;
-  --paper: #f3efe4;
+  --focus: #ffffff;
+  --field-line: #7f7b82;
+  --sign-text: #ff8592;
+  --poster: #f2efef;
+  --poster-ink: #1a1a1d;
+  --paper: #f6f1ec;
   --paper-ink: #22252c;
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
 }
@@ -99,7 +105,14 @@ a { color: var(--sign-text); }
 .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
 
 /* Header */
-header { padding: 28px 0 20px; }
+header { padding: 28px 0 0; }
+.flag {
+  background: var(--sign); color: #ffffff;
+  box-shadow: 0 0 0 100vmax var(--sign); clip-path: inset(0 -100vmax);
+  margin: 22px 0 24px; padding: 22px 0 24px;
+}
+.slogan { font: 800 clamp(30px, 6vw, 52px)/1.02 "Bricolage Grotesque", sans-serif; letter-spacing: -0.02em; margin: 0; }
+.flag .lede { color: #ffffff; opacity: .95; margin-top: 10px; }
 .brand { display: flex; gap: 18px; align-items: center; }
 .psign {
   flex: none;
@@ -109,7 +122,7 @@ header { padding: 28px 0 20px; }
   color: var(--sign-ink);
   display: grid; place-items: center;
   font: 800 44px/1 "Bricolage Grotesque", sans-serif;
-  border: 3px solid var(--surface);
+  border: 3px solid #ffffff;
   outline: 2px solid var(--sign);
   transform: rotate(-4deg);
 }
@@ -227,7 +240,7 @@ details.tarief .row2 { margin-top: 10px; }
 .receipt .grand small { font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 400; }
 .receipt .yearly {
   margin-top: 12px; padding: 14px 12px 18px; text-align: center;
-  background: #f5b300; color: #1b1d24; border-radius: 6px;
+  background: #c8102e; color: #ffffff; border-radius: 6px;
 }
 .receipt .yearly b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: clamp(38px, 11vw, 48px); line-height: 1.05; letter-spacing: -0.02em; }
 .receipt .delta { margin-top: 10px; text-align: center; font-size: 13px; }
@@ -239,7 +252,7 @@ details.tarief .row2 { margin-top: 10px; }
 .receipt .rfoot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 18px 0 16px; }
 .receipt .stamp {
   margin-right: 4px; transform: rotate(-8deg); background: var(--paper); white-space: nowrap;
-  border: 3px solid #c2410c; color: #c2410c; border-radius: 6px; padding: 6px 10px;
+  border: 3px solid #c8102e; color: #c8102e; border-radius: 6px; padding: 6px 10px;
   font: 800 16px/1 "Bricolage Grotesque", sans-serif; text-transform: uppercase;
   opacity: .85; mix-blend-mode: multiply; pointer-events: none;
 }
@@ -284,8 +297,8 @@ details.tarief .row2 { margin-top: 10px; }
 .toast { font-size: 14px; color: var(--ok); align-self: center; }
 .cta {
   margin-top: 16px; padding: 18px;
-  border: 3px solid var(--surface); outline: 2px solid var(--sign);
-  background: var(--sign); color: var(--sign-ink);
+  border: 3px solid var(--bg); outline: 3px solid var(--sign);
+  background: var(--poster); color: var(--poster-ink);
   border-radius: 14px; box-shadow: var(--shadow);
   display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap;
 }
@@ -297,7 +310,7 @@ details.tarief .row2 { margin-top: 10px; }
   padding: 12px 18px; border-radius: 10px;
 }
 .cta a:hover { filter: brightness(1.05); }
-.cta a:focus-visible { outline: 3px solid var(--sign-ink); outline-offset: 2px; }
+.cta a:focus-visible { outline: 3px solid var(--poster-ink); outline-offset: 2px; }
 /* Info */
 section.info { margin: 40px 0 0; }
 section.info h2 { font-size: 28px; margin-bottom: 14px; }
@@ -344,7 +357,8 @@ footer li + li { margin-top: 10px; }
   .tab small { display: none; }
   .tab b { font-size: 16px; }
   .psign { width: 52px; height: 52px; font-size: 36px; }
-  header { padding: 20px 0 16px; }
+  header { padding: 20px 0 0; }
+  .flag { margin: 16px 0 18px; padding: 18px 0 20px; }
   .card { padding: 18px; }
   .row2 { grid-template-columns: 1fr; }
   /* Tabel: elke zone als eigen blok */
@@ -370,8 +384,11 @@ footer li + li { margin-top: 10px; }
         <h1>Wat kost je zondag?</h1>
       </div>
     </div>
-    <p class="lede">Vanaf 3 januari 2027 betaal je in Utrecht ook op zondag van 09.00 tot 23.00 uur voor parkeren in de binnenstad en de wijken eromheen. Kies je zondag en schrik van je bonnetje. De grap is van ons, de tarieven zijn echt.</p>
   </header>
+  <section class="flag" aria-label="Statement">
+    <p class="slogan" id="slogan">Visite is geen verdienmodel.</p>
+    <p class="lede">Vanaf 3 januari 2027 betaal je in Utrecht ook op zondag van 09.00 tot 23.00 uur voor parkeren in de binnenstad en de wijken eromheen. Kies je zondag en schrik van je bonnetje. De grap is van ons, de tarieven zijn echt.</p>
+  </section>
 
   <p class="shared" id="shared" hidden>Je kijkt naar het bonnetje van iemand anders. <button type="button" id="ownBtn">Reken je eigen zondag uit</button></p>
 
