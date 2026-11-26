@@ -21,8 +21,10 @@ De knop "TOET!" telt hoeveel bezoekers meetoeteren tegen betaald parkeren op zon
 
 - `api/toeter.php` bewaart het totaal in `data/teller.json`.
 - De map `data/` moet schrijfbaar zijn voor de webserver. `data/.htaccess` blokkeert toegang via het web op Apache-servers. Gebruikt je host nginx, laat dan `data/` afschermen of zet de map buiten de webroot.
-- Per IP-adres telt de server maximaal 5 toeters per dag. Het IP-adres wordt niet opgeslagen, alleen een gezouten hash, en die wordt de volgende dag weggegooid.
+- Er wordt niets per bezoeker opgeslagen: geen IP-adressen, geen cookies. De browser onthoudt alleen lokaal dat er al getoeterd is.
 - Per browser telt de eerste klik; daarna geeft de knop alleen nog grapjes.
+- Tegen opdrijven telt de server maximaal 60 toeters per minuut, van alle bezoekers samen. Daarboven krijgt de bezoeker de melding dat het even druk is.
+- Let op: de webserver van je host houdt zelf vaak toegangslogs met IP-adressen bij. Die staan los van de teller. Bij veel hosts kun je ze in het controlepaneel uitzetten of anonimiseren.
 - Zonder PHP (bijvoorbeeld op GitHub Pages of als je het bestand lokaal opent) werkt de knop wel, maar loopt er geen teller.
 
 Het is een ludieke teller, geen petitie. De teller is niet fraudebestendig.

@@ -841,10 +841,14 @@ footer ul { padding-left: 18px; }
         .then(function (r) { if (!r.ok) throw 0; return r.json(); })
         .then(function (d) {
           show(d.count);
+          if (!d.counted) {
+            bubble.textContent = "Het is even druk bij de toeter. Probeer het over een minuutje nog eens.";
+            return;
+          }
           already = true;
           try { localStorage.setItem(KEY, "1"); } catch (e) {}
           setDone();
-          bubble.textContent = d.counted ? jokes[0] : "Je hebt vandaag al flink getoeterd. Morgen weer.";
+          bubble.textContent = jokes[0];
         })
         .catch(function () { bubble.textContent = "De toeter hapert even. Probeer het later nog eens."; })
         .then(function () { busy = false; });

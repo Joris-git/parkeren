@@ -1,14 +1,17 @@
 <?php
 // Gedeelde "toeter"-teller voor Wat kost je zondag?
 // GET  -> {"count": n}
-// POST -> telt 1 op (max TOETS_PER_DAG per IP per dag) -> {"count": n, "counted": bool}
+// POST -> telt 1 op -> {"count": n, "counted": bool}
+//
+// Er wordt niets per bezoeker opgeslagen: geen IP-adressen, geen cookies.
+// Tegen opdrijven is er alleen een rem voor de hele site: maximaal
+// MAX_PER_MINUUT toeters per minuut, van alle bezoekers samen.
 //
 // Opslag: ../data/ (moet schrijfbaar zijn en niet via het web bereikbaar).
-// IP-adressen worden niet bewaard: alleen een gezouten hash, en alleen voor vandaag.
 
 declare(strict_types=1);
 
-const TOETS_PER_DAG = 5;
+const MAX_PER_MINUUT = 60;
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -24,14 +27,14 @@ if (!is_dir($dataDir) && !@mkdir($dataDir, 0750, true)) {
 $countFile = $dataDir . '/teller.json';
 $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
 
-function readCount(string $file): int {
-    if (!is_file($file)) return 0;
+function readJson(string $file): array {
+    if (!is_file($file)) return [];
     $d = json_decode((string) file_get_contents($file), true);
-    return is_array($d) && isset($d['count']) ? max(0, (int) $d['count']) : 0;
+    return is_array($d) ? $d : [];
 }
 
 if ($method === 'GET') {
-    echo json_encode(['count' => readCount($countFile)]);
+    echo json_encode(['count' => max(0, (int) (readJson($countFile)['count'] ?? 0))]);
     exit;
 }
 
@@ -51,22 +54,6 @@ if ($origin !== '' && parse_url($origin, PHP_URL_HOST) !== parse_url('http://' .
     exit;
 }
 
-// Geheim zout, eenmalig aangemaakt.
-$saltFile = $dataDir . '/zout.txt';
-if (!is_file($saltFile)) {
-    file_put_contents($saltFile, bin2hex(random_bytes(32)), LOCK_EX);
-}
-$salt = trim((string) file_get_contents($saltFile));
-
-$today = gmdate('Ymd');
-$ipHash = hash('sha256', $salt . '|' . $today . '|' . ($_SERVER['REMOTE_ADDR'] ?? ''));
-$rateFile = $dataDir . '/vandaag-' . $today . '.json';
-
-// Oude dagbestanden opruimen.
-foreach (glob($dataDir . '/vandaag-*.json') ?: [] as $f) {
-    if ($f !== $rateFile) @unlink($f);
-}
-
 // Alles onder één lock, zodat gelijktijdige klikken niet verloren gaan.
 $lock = fopen($dataDir . '/.lock', 'c');
 if ($lock === false || !flock($lock, LOCK_EX)) {
@@ -75,16 +62,18 @@ if ($lock === false || !flock($lock, LOCK_EX)) {
     exit;
 }
 
-$rates = is_file($rateFile) ? (json_decode((string) file_get_contents($rateFile), true) ?: []) : [];
-$used = (int) ($rates[$ipHash] ?? 0);
-$count = readCount($countFile);
+$minuteFile = $dataDir . '/minuut.json';
+$minute = gmdate('YmdHi');
+$m = readJson($minuteFile);
+$inMinute = ($m['minuut'] ?? '') === $minute ? (int) ($m['aantal'] ?? 0) : 0;
+
+$count = max(0, (int) (readJson($countFile)['count'] ?? 0));
 $counted = false;
 
-if ($used < TOETS_PER_DAG) {
+if ($inMinute < MAX_PER_MINUUT) {
     $count++;
-    $rates[$ipHash] = $used + 1;
     file_put_contents($countFile, json_encode(['count' => $count]), LOCK_EX);
-    file_put_contents($rateFile, json_encode($rates), LOCK_EX);
+    file_put_contents($minuteFile, json_encode(['minuut' => $minute, 'aantal' => $inMinute + 1]), LOCK_EX);
     $counted = true;
 }
 
