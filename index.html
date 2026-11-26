@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wat kost je zondag?</title>
 <meta name="description" content="Ludieke rekentool: wat kost parkeren op zondag in Utrecht zone A1 en A2 vanaf 1 januari 2027, voor je verjaardag, kerkbezoek, sport of oma op bezoek.">
+<link rel="canonical" href="https://visitebelasting.nl/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://visitebelasting.nl/">
+<meta property="og:title" content="Wat kost je zondag?">
+<meta property="og:description" content="Reken uit wat je verjaardag, kerkdienst of voetbalochtend kost nu je in Utrecht ook op zondag betaalt voor parkeren.">
+<meta property="og:locale" content="nl_NL">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -752,7 +758,7 @@ footer ul { padding-left: 18px; }
   });
   $("resetBtn").addEventListener("click", function () { load(state.s); });
   $("shareBtn").addEventListener("click", function () {
-    var text = shareText(), url = location.href.split("#")[0];
+    var text = shareText(), url = "https://visitebelasting.nl/";
     var done = function (msg) { $("toast").textContent = msg; setTimeout(function () { $("toast").textContent = ""; }, 2500); };
     if (navigator.share) {
       navigator.share({ title: "Wat kost je zondag?", text: text, url: url }).catch(function () {});
