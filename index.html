@@ -569,12 +569,14 @@ footer li + li { margin-top: 10px; }
       freqLabel: "Verjaardagen in huis per jaar", durLabel: "Hoe lang duurt het feestje?",
       discAllowed: true, disc: true, zone: "A2",
       receiptTitle: "VERJAARDAG", stamp: "Lang zal je betalen",
+      bike: "Laat je gasten fietsen: <b>€ 0</b>. Zeg het niet te hard, anders komt er een fietsapp.",
       u: {
         title: "Je verjaardag", sub: "Op zondag ken iedereen. Vanaf 2027 betaolt ook iedereen.",
         carsLabel: "Auto's van je visite",
         carsHint: "Tel auto's, nie de mense. Ome en tante in één auto is één auto. Same rije is ut nieuwe kado.",
         freqLabel: "Verjaardage bij je thuis per jaor", durLabel: "Hoe lang duurt ut feessie?",
         stamp: "Lang zal je betaole",
+        bike: "Laot je visite fietse: <b>€ 0</b>. Nie te hard zegge, anders komt d'r een fietsapp.",
         items: [["groate slagroomtaorte (12 mân)", 18, "groate slagroomtaort (12 mân)"], ["zakke chips", 2, "zak chips"]]
       },
       items: [
@@ -591,11 +593,13 @@ footer li + li { margin-top: 10px; }
       freqLabel: "Zondagen per jaar", durLabel: "Dienst, koffie en napraten",
       discAllowed: false, disc: false, zone: "A1",
       receiptTitle: "KERKBEZOEK", stamp: "Amen",
+      bike: "Op de fiets naar de kerk: <b>€ 0</b>. Bidden voor droog weer is ook nog gratis.",
       u: {
         title: "Naor de kerk", sub: "Dienst, een bakkie na afloop en nog effe kletse bij de deur. Buite loopt de meter mee.",
         carsLabel: "Auto's van de kerkgangers",
         carsHint: "Op 1 voor je eige auto, of schuif door voor de hele gemeente.",
         freqLabel: "Zondage per jaor", durLabel: "Dienst, bakkie en nakletse",
+        bike: "Op de fiets naor de kerk: <b>€ 0</b>. Bidde voor droog weer is oak nog gratis.",
         items: [["keer € 2 in de collectezak", 2, "keer € 2 in de collectezak", "doen"]]
       },
       items: [
@@ -611,11 +615,13 @@ footer li + li { margin-top: 10px; }
       freqLabel: "Bezoekjes per jaar", durLabel: "Hoe lang blijft oma",
       discAllowed: true, disc: true, zone: "A2",
       receiptTitle: "ZONDAGSE VISITE", stamp: "Oma betaalt",
+      bike: "Oma op de fiets uit Bilthoven: <b>€ 0</b>. Haar knieën denken daar anders over.",
       u: {
         stamp: "Oma betaolt", title: "Oma komt langs", sub: "Ze komt uit Bilthoven en neemt altijd koekies mee. Vanaf 2027 ook de parkeerapp.",
         carsLabel: "Auto's voor de deur",
         carsHint: "Komt opa ook, in z'n eige auto? Dan zijn ut d'r twee. Eén visite, twee keer betaole.",
         freqLabel: "Keer per jaor", durLabel: "Hoe lang blijft oma?",
+        bike: "Oma op de fiets uit Bilthoven: <b>€ 0</b>. Haor knieë denke d'r anders over.",
         items: [["bosse bloeme voor oma", 20, "bos bloeme voor oma"]]
       },
       items: [
@@ -865,7 +871,7 @@ footer li + li { margin-top: 10px; }
         if (n < 1) return;
         vd += '<li>' + L("Voor dat geld had je ", "Voor da geld had je ") + '<b>' + num0.format(n) + '</b> ' + (n === 1 && it[2] ? it[2] : it[0]) + L(" kunnen ", " kenne ") + (it[3] || L("kopen", "kope")) + '.</li>';
       });
-      vd += L('<li>Op de fiets kost het <b>€ 0</b>. Wel even je regenjas pakken.</li>', '<li>Op de fiets kost ut <b>€ 0</b>. Wel effe je regenjas pakke.</li>');
+      vd += '<li>' + T(sc, "bike") + '</li>';
       vd += '</ul>';
     }
     $("verdict").innerHTML = vd;
