@@ -106,13 +106,17 @@ a { color: var(--sign-text); }
 
 /* Header */
 header { padding: 6px 0 0; }
-.topbar { display: flex; justify-content: flex-end; padding-top: 10px; }
-.langbtn {
-  appearance: none; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600;
-  min-height: 44px; padding: 8px 16px; border-radius: 99px;
-  border: 2px solid var(--sign); background: var(--surface); color: var(--sign-text);
+.topbar { display: flex; justify-content: flex-end; padding-top: 10px; margin-bottom: 18px; }
+.langswitch {
+  display: inline-flex; padding: 3px; gap: 3px; border-radius: 99px;
+  border: 2px solid var(--sign); background: var(--surface);
 }
-.langbtn[aria-pressed="true"] { background: var(--sign); color: var(--sign-ink); }
+.langswitch button {
+  appearance: none; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600;
+  min-height: 38px; min-width: 44px; padding: 6px 16px; border: 0; border-radius: 99px;
+  background: transparent; color: var(--sign-text);
+}
+.langswitch button[aria-pressed="true"] { background: var(--sign); color: var(--sign-ink); }
 .flag {
   background: var(--sign); color: #ffffff;
   box-shadow: 0 0 0 100vmax var(--sign); clip-path: inset(0 -100vmax);
@@ -394,7 +398,7 @@ footer li + li { margin-top: 10px; }
 <body>
 <div class="wrap">
 
-  <div class="topbar"><button class="langbtn" id="langBtn" type="button" aria-pressed="false">Lees in plat Uteregs</button></div>
+  <div class="topbar"><div class="langswitch" role="group" aria-label="Taal"><button type="button" data-lang="nl" aria-pressed="true">Nederlands</button><button type="button" data-lang="utr" aria-pressed="false">Utrechts</button></div></div>
 
   <header>
     <div class="brand">
@@ -683,9 +687,9 @@ footer li + li { margin-top: 10px; }
       var k = el.getAttribute("data-i18n-aria");
       el.setAttribute("aria-label", lang === "utr" && UTR[k] ? UTR[k] : el.dataset.ariaNl);
     });
-    var b = $("langBtn");
-    b.setAttribute("aria-pressed", lang === "utr" ? "true" : "false");
-    b.textContent = lang === "utr" ? "Terug naar gewoon Nederlands" : "Lees in plat Uteregs";
+    document.querySelectorAll(".langswitch button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false");
+    });
   }
   var rates = { A1: DEFAULT_RATES.A1, A2: DEFAULT_RATES.A2 };
 
@@ -1022,12 +1026,15 @@ footer li + li { margin-top: 10px; }
     try { saved = localStorage.getItem("zondag-taal"); } catch (e) {}
     lang = q === "utr" || (!q && saved === "utr") ? "utr" : "nl";
   })();
-  $("langBtn").addEventListener("click", function () {
-    lang = lang === "utr" ? "nl" : "utr";
-    try { localStorage.setItem("zondag-taal", lang); } catch (e) {}
-    applyLang();
-    syncForm();
-    render();
+  document.querySelectorAll(".langswitch button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (lang === b.dataset.lang) return;
+      lang = b.dataset.lang;
+      try { localStorage.setItem("zondag-taal", lang); } catch (e) {}
+      applyLang();
+      syncForm();
+      render();
+    });
   });
 
   applyLang();
