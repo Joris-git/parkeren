@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wat kost je zondag?</title>
+<meta name="description" content="Ludieke rekentool: wat kost parkeren op zondag in Utrecht zone A1 en A2 vanaf 1 januari 2027, voor je verjaardag, kerkbezoek, sport of oma op bezoek.">
+<link rel="canonical" href="https://visitebelasting.nl/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://visitebelasting.nl/">
+<meta property="og:title" content="Wat kost je zondag?">
+<meta property="og:description" content="Reken uit wat je verjaardag, kerkdienst of voetbalochtend kost nu je in Utrecht ook op zondag betaalt voor parkeren.">
+<meta property="og:locale" content="nl_NL">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f1ea;
+  --surface: #ffffff;
+  --surface-2: #ebe6db;
+  --ink: #1b1d24;
+  --ink-soft: #565b68;
+  --line: #d8d1c2;
+  --sign: #1d4ed8;
+  --sign-ink: #ffffff;
+  --accent: #f5b300;
+  --accent-ink: #1b1d24;
+  --danger: #c2410c;
+  --ok: #15803d;
+  --paper: #fffdf7;
+  --paper-ink: #22252c;
+  --shadow: 0 1px 2px rgba(20,20,30,.06), 0 8px 24px rgba(20,20,30,.08);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141a;
+    --surface: #1b1e26;
+    --surface-2: #252935;
+    --ink: #eceef3;
+    --ink-soft: #a3a9b8;
+    --line: #333847;
+    --sign: #3b6cf0;
+    --sign-ink: #ffffff;
+    --accent: #ffc42e;
+    --accent-ink: #15171d;
+    --danger: #fb923c;
+    --ok: #4ade80;
+    --paper: #f3efe4;
+    --paper-ink: #22252c;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141a;
+  --surface: #1b1e26;
+  --surface-2: #252935;
+  --ink: #eceef3;
+  --ink-soft: #a3a9b8;
+  --line: #333847;
+  --sign: #3b6cf0;
+  --sign-ink: #ffffff;
+  --accent: #ffc42e;
+  --accent-ink: #15171d;
+  --danger: #fb923c;
+  --ok: #4ade80;
+  --paper: #f3efe4;
+  --paper-ink: #22252c;
+  --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.35);
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+}
+h1, h2, h3 { font-family: "Bricolage Grotesque", Inter, system-ui, sans-serif; line-height: 1.1; margin: 0; }
+a { color: var(--sign); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+/* Header */
+header { padding: 32px 0 20px; }
+.brand { display: flex; gap: 18px; align-items: center; }
+.psign {
+  flex: none;
+  width: 64px; height: 64px;
+  border-radius: 12px;
+  background: var(--sign);
+  color: var(--sign-ink);
+  display: grid; place-items: center;
+  font: 800 44px/1 "Bricolage Grotesque", sans-serif;
+  border: 3px solid var(--surface);
+  outline: 2px solid var(--sign);
+  transform: rotate(-4deg);
+}
+h1 { font-size: clamp(32px, 6vw, 54px); font-weight: 800; letter-spacing: -0.02em; }
+.lede { color: var(--ink-soft); margin: 10px 0 0; max-width: 60ch; }
+.pill {
+  display: inline-block;
+  background: var(--accent); color: var(--accent-ink);
+  font-weight: 600; font-size: 13px;
+  padding: 3px 10px; border-radius: 99px;
+  margin-bottom: 8px;
+}
+
+/* Scenario tabs */
+.tabs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 8px 0 20px; }
+.tab {
+  appearance: none; cursor: pointer;
+  background: var(--surface); color: var(--ink);
+  border: 2px solid var(--line); border-radius: 14px;
+  padding: 12px 10px; text-align: left;
+  font: inherit;
+  display: flex; flex-direction: column; gap: 2px;
+  transition: border-color .15s, transform .15s;
+}
+.tab:hover { transform: translateY(-1px); }
+.tab .ico { font-size: 26px; line-height: 1; }
+.tab b { font-family: "Bricolage Grotesque", sans-serif; font-size: 18px; }
+.tab small { color: var(--ink-soft); font-size: 13px; }
+.tab[aria-selected="true"] { border-color: var(--sign); background: color-mix(in srgb, var(--sign) 8%, var(--surface)); }
+.tab:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Main grid */
+.grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 20px; align-items: start; }
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+.card h2 { font-size: 24px; margin-bottom: 4px; }
+.card .sub { color: var(--ink-soft); margin: 0 0 18px; font-size: 15px; }
+
+.field { margin-bottom: 18px; }
+.field label, .field .lbl { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-weight: 600; font-size: 15px; margin-bottom: 6px; }
+.field output { font-family: "JetBrains Mono", monospace; font-weight: 600; color: var(--sign); white-space: nowrap; }
+.field .hint { color: var(--ink-soft); font-size: 13px; margin-top: 4px; }
+
+input[type="range"] { width: 100%; accent-color: var(--sign); height: 28px; }
+select, input[type="number"] {
+  width: 100%; font: inherit; color: var(--ink);
+  background: var(--surface-2); border: 1px solid var(--line);
+  border-radius: 10px; padding: 10px 12px;
+}
+.seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.seg button {
+  appearance: none; cursor: pointer; font: inherit;
+  padding: 10px; border-radius: 10px;
+  border: 2px solid var(--line); background: var(--surface-2); color: var(--ink);
+  text-align: left;
+}
+.seg button b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 17px; }
+.seg button span { font-size: 13px; color: var(--ink-soft); }
+.seg button[aria-pressed="true"] { border-color: var(--sign); background: color-mix(in srgb, var(--sign) 10%, var(--surface)); }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.toggle { display: flex; gap: 12px; align-items: flex-start; cursor: pointer; padding: 12px; border-radius: 12px; background: var(--surface-2); }
+.toggle input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--sign); flex: none; }
+.toggle span { font-size: 14px; color: var(--ink-soft); }
+.toggle b { color: var(--ink); display: block; font-size: 15px; }
+
+details.tarief { margin-top: 6px; font-size: 14px; }
+details.tarief summary { cursor: pointer; color: var(--ink-soft); }
+details.tarief .row2 { margin-top: 10px; }
+
+/* Receipt */
+.receipt-wrap { position: sticky; top: 16px; }
+.receipt {
+  background: var(--paper); color: var(--paper-ink);
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 14px;
+  padding: 26px 22px 30px;
+  border-radius: 4px;
+  box-shadow: var(--shadow);
+  position: relative;
+  --zig: 10px;
+  -webkit-mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--zig)) 100%;
+          mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--zig)) 100%;
+}
+.receipt .rhead { text-align: center; border-bottom: 2px dashed #b9b2a3; padding-bottom: 12px; margin-bottom: 12px; }
+.receipt .rhead .big { font-family: "Bricolage Grotesque", sans-serif; font-weight: 800; font-size: 22px; letter-spacing: .02em; }
+.receipt .rhead div { font-size: 12px; color: #6b6558; }
+.receipt .line { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; }
+.receipt .line span:last-child { text-align: right; white-space: nowrap; }
+.receipt .muted { color: #6b6558; }
+.receipt .discount { color: #15803d; }
+.receipt hr { border: 0; border-top: 2px dashed #b9b2a3; margin: 12px 0; }
+.receipt .total { font-size: 15px; font-weight: 600; }
+.receipt .grand {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: "Bricolage Grotesque", sans-serif; font-weight: 800;
+  font-size: 34px; margin: 6px 0 2px;
+}
+.receipt .grand small { font-family: "JetBrains Mono", monospace; font-size: 13px; font-weight: 400; }
+.receipt .yearly {
+  margin-top: 12px; padding: 12px; text-align: center;
+  background: #f5b300; color: #1b1d24; border-radius: 6px;
+}
+.receipt .yearly b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 30px; line-height: 1.1; }
+.receipt .delta { margin-top: 10px; text-align: center; font-size: 13px; }
+.receipt .barcode {
+  height: 38px; margin: 18px auto 0; width: 80%;
+  background: repeating-linear-gradient(90deg, #22252c 0 2px, transparent 2px 4px, #22252c 4px 7px, transparent 7px 8px, #22252c 8px 9px, transparent 9px 12px);
+  opacity: .85;
+}
+.receipt .thanks { text-align: center; font-size: 12px; margin-top: 8px; color: #6b6558; }
+
+.verdict {
+  margin-top: 16px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-left: 6px solid var(--accent);
+  border-radius: 14px; padding: 16px 18px;
+  box-shadow: var(--shadow);
+}
+.verdict p { margin: 0; font-family: "Bricolage Grotesque", sans-serif; font-weight: 700; font-size: 20px; line-height: 1.25; }
+.verdict ul { margin: 12px 0 0; padding-left: 20px; color: var(--ink-soft); font-size: 15px; }
+.verdict ul b { color: var(--ink); font-family: "JetBrains Mono", monospace; }
+.verdict .ctx { margin-top: 12px; font-size: 14px; color: var(--ink-soft); font-family: Inter, sans-serif; font-weight: 400; }
+.actions { display: flex; gap: 10px; margin-top: 14px; flex-wrap: wrap; }
+.btn {
+  appearance: none; cursor: pointer; font: inherit; font-weight: 600;
+  border-radius: 10px; padding: 10px 14px;
+  border: 2px solid var(--sign); background: var(--sign); color: var(--sign-ink);
+}
+.btn.ghost { background: transparent; color: var(--sign); }
+.toast { font-size: 14px; color: var(--ok); align-self: center; }
+.cta {
+  margin-top: 16px; padding: 18px;
+  background: var(--sign); color: var(--sign-ink);
+  border-radius: 14px; box-shadow: var(--shadow);
+  display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+}
+.cta p { margin: 0; font-size: 15px; flex: 1 1 220px; }
+.cta p b { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 20px; line-height: 1.2; margin-bottom: 2px; }
+.cta a {
+  flex: none; text-decoration: none; font-weight: 700;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 12px 18px; border-radius: 10px;
+}
+.cta a:hover { filter: brightness(1.05); }
+.cta a:focus-visible { outline: 3px solid var(--sign-ink); outline-offset: 2px; }
+
+/* Toeter */
+.toeter {
+  margin: 36px 0 0;
+  background: var(--accent); color: var(--accent-ink);
+  border-radius: 22px; padding: 28px;
+  display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center;
+  box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+}
+.toeter::after {
+  content: "P"; position: absolute; right: -10px; bottom: -60px;
+  font: 800 260px/1 "Bricolage Grotesque", sans-serif;
+  color: rgba(0,0,0,.06); pointer-events: none;
+}
+.horn {
+  appearance: none; cursor: pointer; border: 0;
+  width: 168px; height: 168px; border-radius: 50%;
+  background: #1b1d24; color: #ffc42e;
+  font: 800 34px/1 "Bricolage Grotesque", sans-serif;
+  box-shadow: 0 8px 0 #000, 0 14px 24px rgba(0,0,0,.25);
+  transition: transform .08s, box-shadow .08s;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  position: relative; z-index: 1;
+}
+.horn small { display: block; font: 600 13px/1.2 Inter, sans-serif; color: #f4f1ea; margin-top: 6px; }
+.horn:active, .horn.press { transform: translateY(6px); box-shadow: 0 2px 0 #000, 0 6px 12px rgba(0,0,0,.25); }
+.horn:focus-visible { outline: 4px solid #1b1d24; outline-offset: 4px; }
+.horn.shake { animation: shake .4s; }
+@keyframes shake {
+  0%,100% { rotate: 0deg; } 20% { rotate: -7deg; } 40% { rotate: 6deg; } 60% { rotate: -4deg; } 80% { rotate: 3deg; }
+}
+.toeter-txt { position: relative; z-index: 1; }
+.toeter h2 { font-size: clamp(26px, 4vw, 36px); margin-bottom: 6px; }
+.toeter p { margin: 0 0 10px; max-width: 52ch; }
+.bubble { min-height: 24px; font-weight: 700; margin-top: 10px; }
+.toeter .fine { font-size: 13px; opacity: .8; margin-top: 8px; }
+.toeter .fine a { color: inherit; }
+@media (max-width: 640px) {
+  .toeter { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 24px 18px; gap: 18px; }
+  .toeter p { margin-left: auto; margin-right: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .horn.shake { animation: none; } }
+
+/* Info */
+section.info { margin: 40px 0 0; }
+section.info h2 { font-size: 28px; margin-bottom: 14px; }
+.infogrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.infogrid .card h3 { font-size: 19px; margin-bottom: 8px; }
+.infogrid .card p, .infogrid .card li { font-size: 15px; color: var(--ink-soft); }
+.infogrid .card ul { padding-left: 18px; margin: 0; }
+table { width: 100%; border-collapse: collapse; font-size: 15px; }
+th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; }
+td.num { font-family: "JetBrains Mono", monospace; }
+.tablecard { overflow-x: auto; }
+
+footer { margin: 40px 0 32px; color: var(--ink-soft); font-size: 14px; }
+footer ul { padding-left: 18px; }
+.themebtn {
+  appearance: none; border: 1px solid var(--line); background: var(--surface);
+  color: var(--ink); border-radius: 99px; padding: 6px 12px; cursor: pointer; font: inherit; font-size: 14px;
+}
+.topbar { display: flex; justify-content: flex-end; padding-top: 14px; }
+
+@media (max-width: 880px) {
+  .grid { grid-template-columns: 1fr; }
+  .receipt-wrap { position: static; }
+  .infogrid { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .tabs { grid-template-columns: 1fr 1fr; }
+  .psign { width: 52px; height: 52px; font-size: 36px; }
+  .card { padding: 18px; }
+  .row2 { grid-template-columns: 1fr; }
+  td.num { white-space: normal; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar"><button class="themebtn" id="themeBtn" type="button" aria-label="Wissel licht en donker">Licht / donker</button></div>
+
+  <header>
+    <div class="brand">
+      <div class="psign" aria-hidden="true">P</div>
+      <div>
+        <span class="pill">Vanaf zondag 3 januari 2027</span>
+        <h1>Wat kost je zondag?</h1>
+      </div>
+    </div>
+    <p class="lede">In Utrecht betaal je vanaf 1 januari 2027 ook op zondag van 09.00 tot 23.00 uur voor parkeren in zone A1 (binnenstad) en zone A2 (de wijken eromheen). Reken hier uit wat je verjaardag, kerkdienst of voetbalochtend straks kost. Met een knipoog, maar de bedragen zijn echt.</p>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Kies je zondag">
+    <button class="tab" role="tab" data-s="feest"><span class="ico" aria-hidden="true">🎂</span><b>Verjaardag</b><small>Taart, koffie, visite</small></button>
+    <button class="tab" role="tab" data-s="kerk"><span class="ico" aria-hidden="true">⛪</span><b>Kerk</b><small>Dienst en koffie na</small></button>
+    <button class="tab" role="tab" data-s="sport"><span class="ico" aria-hidden="true">⚽</span><b>Sport</b><small>Rijden naar de wedstrijd</small></button>
+    <button class="tab" role="tab" data-s="oma"><span class="ico" aria-hidden="true">👵</span><b>Oma op bezoek</b><small>Zondagse visite</small></button>
+  </nav>
+
+  <main class="grid">
+    <div class="card" id="form">
+      <h2 id="fTitle">Je verjaardag</h2>
+      <p class="sub" id="fSub"></p>
+
+      <div class="field">
+        <div class="lbl">Parkeerzone</div>
+        <div class="seg" id="zoneSeg">
+          <button type="button" data-z="A1" aria-pressed="false"><b>A1 binnenstad</b><span id="zA1rate"></span></button>
+          <button type="button" data-z="A2" aria-pressed="false"><b>A2 rond de binnenstad</b><span id="zA2rate"></span></button>
+        </div>
+        <div class="hint">A2 is onder meer Wittevrouwen, Oudwijk, Lombok, Nieuw Engeland, Pijlsweerd, Vogelenbuurt, Dichterswijk en Hooch Boulandt.</div>
+      </div>
+
+      <div class="field">
+        <label for="cars"><span id="carsLabel">Gasten met auto</span><output id="carsOut"></output></label>
+        <input type="range" id="cars" min="1" max="40" step="1">
+        <div class="hint" id="carsHint"></div>
+      </div>
+
+      <div class="row2">
+        <div class="field">
+          <label for="start">Begintijd</label>
+          <select id="start"></select>
+        </div>
+        <div class="field">
+          <label for="freq"><span id="freqLabel">Keer per jaar</span><output id="freqOut"></output></label>
+          <input type="range" id="freq" min="1" max="52" step="1">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="dur"><span id="durLabel">Hoe lang</span><output id="durOut"></output></label>
+        <input type="range" id="dur" min="0.5" max="12" step="0.5">
+      </div>
+
+      <div class="field" id="discField">
+        <label class="toggle">
+          <input type="checkbox" id="disc">
+          <div><b>Bezoekerskorting gebruiken (50%)</b><span>Je woont zelf in de zone en meldt je gasten aan met de bezoekersregeling. Het aantal kortingsuren per jaar is beperkt; dat rekent deze tool niet mee.</span></div>
+        </label>
+      </div>
+
+      <details class="tarief">
+        <summary>Tarieven aanpassen</summary>
+        <div class="row2">
+          <div class="field">
+            <label for="rA1">A1 per uur (€)</label>
+            <input type="number" id="rA1" step="0.01" min="0" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label for="rA2">A2 per uur (€)</label>
+            <input type="number" id="rA2" step="0.01" min="0" inputmode="decimal">
+          </div>
+        </div>
+        <div class="hint">Standaard rekent de tool met de tarieven van 2026 (A1 € 8,01 en A2 € 6,94). De tarieven voor 2027 waren bij het maken van deze tool nog niet gepubliceerd en kunnen hoger uitvallen.</div>
+      </details>
+    </div>
+
+    <div class="receipt-wrap">
+      <div class="receipt" id="receipt" aria-live="polite"></div>
+      <div class="verdict" id="verdict"></div>
+      <div class="actions">
+        <button class="btn" id="shareBtn" type="button">Deel je bonnetje</button>
+        <button class="btn ghost" id="resetBtn" type="button">Begin opnieuw</button>
+        <span class="toast" id="toast" role="status"></span>
+      </div>
+      <div class="cta">
+        <p><b id="ctaHead">Vind je dit te gek?</b>Bewoners vragen de gemeenteraad om het parkeerbeleid voor bezoek op zondag te heroverwegen.</p>
+        <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">Teken de petitie</a>
+      </div>
+    </div>
+  </main>
+
+  <section class="toeter" aria-labelledby="toeterTitle">
+    <button class="horn" id="horn" type="button" aria-describedby="toeterTitle">TOET!<small id="hornSub">Druk hier</small></button>
+    <div class="toeter-txt">
+      <h2 id="toeterTitle">Toeter mee tegen betaald parkeren op zondag</h2>
+      <p>Op zondag hoort het stil te zijn op straat. Behalve nu even. Druk op de toeter en laat even horen wat je ervan vindt.</p>
+      <div class="bubble" id="bubble" role="status"></div>
+      <div class="fine">Toeteren hoort de gemeenteraad helaas niet. Een handtekening wel: <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">teken de petitie</a>.</div>
+    </div>
+  </section>
+
+  <section class="info">
+    <h2>Wat verandert er?</h2>
+    <div class="infogrid">
+      <div class="card tablecard">
+        <h3>Zondag oud en nieuw</h3>
+        <table>
+          <thead><tr><th></th><th>A1</th><th>A2</th></tr></thead>
+          <tbody>
+            <tr><td>Zondag 2026</td><td class="num">12.00 tot 18.00</td><td class="num">gratis</td></tr>
+            <tr><td>Zondag 2027</td><td class="num">09.00 tot 23.00</td><td class="num">09.00 tot 23.00</td></tr>
+            <tr><td>Extra betaalde uren</td><td class="num">+8</td><td class="num">+14</td></tr>
+            <tr><td>Bezoekerskorting</td><td class="num">50%</td><td class="num">50%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>Wie heeft er bezwaar?</h3>
+        <ul>
+          <li>Een <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">petitie van een bewoner uit Nieuw Engeland</a> had op 26 november 2026 ruim 1.700 handtekeningen.</li>
+          <li>Veertien kerken in de binnenstad vroegen de burgemeester per brief om een oplossing.</li>
+          <li>Amendementen voor een vrije zondagochtend en voor een uitzondering voor religieuze instellingen haalden het op 12 november niet.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Goed om te weten</h3>
+        <ul>
+          <li>Voor mantelzorg, thuiszorg en kraamzorg gaat de korting in de hele stad naar 99%, als je de regeling gebruikt.</li>
+          <li>Kerk en sport: je bent geen bezoek van een bewoner, dus geen bezoekerskorting.</li>
+          <li>Na 23.00 uur en voor 09.00 uur parkeer je gratis. Een nachtelijk feest wordt dus vanzelf goedkoper.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><b>Dit is een ludieke rekentool, geen officiële berekening.</b> De tool is niet van de gemeente Utrecht. Bedragen zijn indicatief: per auto, alleen binnen de betaaltijden, zonder grens op kortingsuren en zonder transactiekosten van parkeerapps. Prijzen van taart, chips, voetbalschoenen en bloemen zijn ronde middenprijzen uit supermarkten en sportwinkels in november 2026. Ze verschillen per winkel en per week.</p>
+    <p>Bronnen:</p>
+    <ul>
+      <li><a href="https://www.utrecht.nl/nieuws/nieuwsbericht-gemeente-utrecht/vanaf-1-januari-in-parkeerzone-a1-en-a2-betaald-parkeren-op-zondag-van-900-tot-2300-uur" rel="noopener">Gemeente Utrecht: vanaf 1 januari in A1 en A2 betaald parkeren op zondag van 9.00 tot 23.00 uur</a></li>
+      <li><a href="https://www.utrecht.nl/parkeertarieven" rel="noopener">Gemeente Utrecht: parkeertarieven (tarieven 2026)</a></li>
+      <li><a href="https://www.duic.nl/nieuws/mobiliteit/61514/vanaf-2027-ook-op-zondag-betaald-parkeren-in-wijken-rond-utrechtse-binnenstad-zorg-krijgt-99-procent-korting" rel="noopener">DUIC: vanaf 2027 ook op zondag betaald parkeren in wijken rond de binnenstad</a></li>
+      <li><a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" rel="noopener">Petities.com: Utrecht, eerlijker parkeerbeleid voor bewoners en bezoekers, en behoud van bereikbaarheid</a></li>
+      <li>RTV Utrecht, 25 november 2026: veertien kerken vragen burgemeester om oplossing</li>
+    </ul>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Betaalvensters op zondag, in uren sinds middernacht.
+  var WINDOWS = {
+    old: { A1: [12, 18], A2: null },
+    neu: { A1: [9, 23], A2: [9, 23] }
+  };
+  var DEFAULT_RATES = { A1: 8.01, A2: 6.94 };
+
+  var SCENARIOS = {
+    feest: {
+      title: "Je verjaardag",
+      sub: "Iedereen komt op zondag, want dan heeft iedereen tijd. Tot nu toe.",
+      carsLabel: "Gasten met auto",
+      carsHint: "Tel auto's, niet mensen. Tante en oom in één auto is één auto.",
+      cars: 8, carsMax: 40, start: 14, dur: 4, durMax: 12, freq: 1, freqMax: 12,
+      freqLabel: "Feestjes per jaar", durLabel: "Hoe lang duurt het feest",
+      discAllowed: true, disc: true, zone: "A2",
+      receiptTitle: "VERJAARDAG",
+      items: [
+        ["grote slagroomtaarten (12 personen)", 18, "grote slagroomtaart (12 personen)"],
+        ["zakken chips", 2, "zak chips"]
+      ]
+    },
+    kerk: {
+      title: "Naar de kerk",
+      sub: "Dienst, koffie na afloop en nog even bijpraten bij de uitgang.",
+      carsLabel: "Auto's van kerkgangers",
+      carsHint: "Zet hem op 1 voor je eigen auto, of schuif door voor de hele gemeente.",
+      cars: 1, carsMax: 150, start: 10, dur: 2, durMax: 5, freq: 52, freqMax: 52,
+      freqLabel: "Zondagen per jaar", durLabel: "Dienst plus koffie",
+      discAllowed: false, disc: false, zone: "A1",
+      receiptTitle: "KERKBEZOEK",
+      items: [
+        ["keer de collectezak met € 2", 2]
+      ]
+    },
+    sport: {
+      title: "Sport op zondag",
+      sub: "Thuiswedstrijd van de jeugd. Ouders rijden, de rest moedigt aan.",
+      carsLabel: "Auto's van ouders",
+      carsHint: "Hoeveel ouders rijden er per wedstrijd met de auto?",
+      cars: 4, carsMax: 30, start: 9, dur: 2.5, durMax: 8, freq: 25, freqMax: 40,
+      freqLabel: "Thuiswedstrijden per seizoen", durLabel: "Wedstrijd plus ranja",
+      discAllowed: false, disc: false, zone: "A2",
+      receiptTitle: "SPORTOCHTEND",
+      items: [
+        ["paar kindervoetbalschoenen", 45]
+      ]
+    },
+    oma: {
+      title: "Oma op bezoek",
+      sub: "Ze komt uit Bilthoven en neemt altijd koekjes mee.",
+      carsLabel: "Auto's",
+      carsHint: "Komt opa ook, in zijn eigen auto? Dan zijn het er twee.",
+      cars: 1, carsMax: 6, start: 12, dur: 5, durMax: 11, freq: 12, freqMax: 52,
+      freqLabel: "Bezoekjes per jaar", durLabel: "Hoe lang blijft oma",
+      discAllowed: true, disc: true, zone: "A2",
+      receiptTitle: "ZONDAGSE VISITE",
+      items: [
+        ["boeketten uit de supermarkt", 20, "boeket uit de supermarkt"]
+      ]
+    }
+  };
+
+  var state = {};
+  var rates = { A1: DEFAULT_RATES.A1, A2: DEFAULT_RATES.A2 };
+
+  var $ = function (id) { return document.getElementById(id); };
+  var eur = new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" });
+  var eur0 = new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+  var num0 = new Intl.NumberFormat("nl-NL", { maximumFractionDigits: 0 });
+
+  function fmtTime(h) {
+    var hh = Math.floor(h), mm = Math.round((h - hh) * 60);
+    if (hh >= 24) { hh -= 24; }
+    return String(hh).padStart(2, "0") + "." + String(mm).padStart(2, "0");
+  }
+  function fmtHours(h) {
+    if (h === 0) return "0 uur";
+    var whole = Math.floor(h), min = Math.round((h - whole) * 60);
+    if (min === 0) return whole + " uur";
+    if (whole === 0) return min + " min";
+    return whole + " uur " + min + " min";
+  }
+  function overlap(start, end, win) {
+    if (!win) return 0;
+    return Math.max(0, Math.min(end, win[1]) - Math.max(start, win[0]));
+  }
+
+  function load(key) {
+    var sc = SCENARIOS[key];
+    state = {
+      s: key, zone: sc.zone, cars: sc.cars, start: sc.start,
+      dur: sc.dur, freq: sc.freq, disc: sc.disc
+    };
+    syncForm();
+    render();
+  }
+
+  function syncForm() {
+    var sc = SCENARIOS[state.s];
+    document.querySelectorAll(".tab").forEach(function (t) {
+      t.setAttribute("aria-selected", t.dataset.s === state.s ? "true" : "false");
+    });
+    $("fTitle").textContent = sc.title;
+    $("fSub").textContent = sc.sub;
+    $("carsLabel").textContent = sc.carsLabel;
+    $("carsHint").textContent = sc.carsHint;
+    $("freqLabel").textContent = sc.freqLabel;
+    $("durLabel").textContent = sc.durLabel;
+    $("cars").max = sc.carsMax; $("cars").value = state.cars;
+    $("dur").max = sc.durMax; $("dur").value = state.dur;
+    $("freq").max = sc.freqMax; $("freq").value = state.freq;
+    $("start").value = String(state.start);
+    $("disc").checked = state.disc;
+    $("discField").hidden = !sc.discAllowed;
+    document.querySelectorAll("#zoneSeg button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.dataset.z === state.zone ? "true" : "false");
+    });
+  }
+
+  function calc() {
+    var sc = SCENARIOS[state.s];
+    var start = state.start, end = Math.min(state.start + state.dur, 24);
+    var rate = rates[state.zone] || 0;
+    var hNew = overlap(start, end, WINDOWS.neu[state.zone]);
+    var hOld = overlap(start, end, WINDOWS.old[state.zone]);
+    var useDisc = sc.discAllowed && state.disc;
+    var factor = useDisc ? 0.5 : 1;
+    var gross = hNew * rate * state.cars;
+    var net = gross * factor;
+    var old = hOld * rate * state.cars * factor;
+    return {
+      rate: rate, hNew: hNew, hOld: hOld, gross: gross, net: net, old: old,
+      disc: gross - net, useDisc: useDisc, end: start + state.dur,
+      year: net * state.freq, yearOld: old * state.freq
+    };
+  }
+
+  function verdictText(r) {
+    var s = state.s, n = r.net, y = r.year;
+    if (n === 0) {
+      return "Gratis! Je zit helemaal buiten de betaaltijden. Slim gepland, of gewoon heel vroeg op.";
+    }
+    if (s === "feest") {
+      if (n < 15) return "Valt mee. Je gasten merken het pas als ze de app openen.";
+      if (n < 60) return "Je visite betaalt samen " + eur0.format(n) + " om jou te feliciteren. Hoop dat het cadeau dat waard is.";
+      if (n < 150) return "Dit feest kost meer aan parkeergeld dan aan taart. Overweeg een bakfietsservice.";
+      return "Gefeliciteerd! De gemeente viert vandaag gezellig met je mee: " + eur0.format(n) + ".";
+    }
+    if (s === "kerk") {
+      if (y < 200) return "Een kleine offerande aan de parkeerautomaat.";
+      if (y < 1000) return "Elke zondag trouw naar de kerk kost je straks " + eur0.format(y) + " per jaar. Amen.";
+      return "Samen betaalt de gemeente " + eur0.format(y) + " per jaar om te mogen zingen. Dat is een flinke collecte, alleen niet voor de kerk.";
+    }
+    if (s === "sport") {
+      if (y < 100) return "Je kind scoort, de parkeerautomaat ook een beetje.";
+      if (y < 600) return "Per seizoen " + eur0.format(y) + " aan parkeergeld. Daar had de club nieuwe ballen van kunnen kopen.";
+      return "Thuisvoordeel bestaat niet meer: " + eur0.format(y) + " per seizoen voor het team.";
+    }
+    if (s === "oma") {
+      if (y < 50) return "Oma vindt het prima. Ze mopperde toch al over de parkeerapp.";
+      if (y < 300) return "Oma betaalt " + eur0.format(y) + " per jaar om jou te zien. Bel haar eens terug.";
+      return "Oma op zondag kost " + eur0.format(y) + " per jaar. Misschien moet jij voortaan naar Bilthoven.";
+    }
+    return "";
+  }
+
+  function contextText() {
+    switch (state.s) {
+      case "kerk": return "Veertien kerken in de binnenstad vroegen de burgemeester om een oplossing. Een amendement om een uitzondering voor religieuze instellingen te onderzoeken werd op 12 november 2026 verworpen.";
+      case "sport": return "Een amendement om de zondagochtend vrij te houden, onder meer voor sportverenigingen, werd op 12 november 2026 verworpen.";
+      case "feest": return "Bewoners in A1 en A2 krijgen 50% bezoekerskorting. In de wijken verder van het centrum (zone BC) is dat 95%.";
+      case "oma": return "Met de mantelzorgregeling is de korting 99%. Maar komt oma gewoon gezellig koffie drinken, dan is het 50%.";
+    }
+    return "";
+  }
+
+  function render() {
+    var sc = SCENARIOS[state.s];
+    var r = calc();
+
+    $("carsOut").textContent = state.cars + (state.cars === 1 ? " auto" : " auto's");
+    $("durOut").textContent = fmtHours(state.dur) + " (tot " + fmtTime(r.end) + ")";
+    $("freqOut").textContent = state.freq + "×";
+    $("zA1rate").textContent = eur.format(rates.A1) + " per uur";
+    $("zA2rate").textContent = eur.format(rates.A2) + " per uur";
+
+    var rc = "";
+    rc += '<div class="rhead"><div class="big">' + sc.receiptTitle + '</div>';
+    rc += '<div>Zondag · zone ' + state.zone + ' · vanaf 2027</div>';
+    rc += '<div>' + fmtTime(state.start) + ' tot ' + fmtTime(r.end) + '</div></div>';
+    rc += line("Tarief zone " + state.zone, eur.format(r.rate) + "/u");
+    rc += line("Betaalde tijd per auto", fmtHours(r.hNew));
+    rc += line("Aantal auto's", "× " + state.cars);
+    rc += line("Subtotaal", eur.format(r.gross));
+    if (r.useDisc) rc += '<div class="line discount"><span>Bezoekerskorting 50%</span><span>− ' + eur.format(r.disc) + '</span></div>';
+    rc += '<hr>';
+    rc += '<div class="grand"><span>' + eur.format(r.net) + '</span><small>deze zondag</small></div>';
+    rc += '<div class="line muted"><span>Zelfde zondag in 2026</span><span>' + eur.format(r.old) + '</span></div>';
+    if (state.freq > 1) {
+      rc += '<div class="yearly">Per jaar (' + state.freq + '×)<b>' + eur.format(r.year) + '</b></div>';
+    }
+    var extra = r.year - r.yearOld;
+    if (extra > 0.005) {
+      rc += '<div class="delta">Dat is ' + eur.format(extra) + (state.freq > 1 ? ' per jaar' : '') + ' meer dan in 2026.</div>';
+    }
+    rc += '<div class="barcode" aria-hidden="true"></div>';
+    rc += '<div class="thanks">Bedankt voor uw bezoek. Tot volgende zondag.</div>';
+    $("receipt").innerHTML = rc;
+
+    var total = r.year;
+    var vd = '<p>' + verdictText(r) + '</p>';
+    if (total > 0) {
+      vd += '<ul>';
+      sc.items.forEach(function (it) {
+        var n = Math.floor(total / it[1]);
+        if (n < 1) return;
+        vd += '<li>Voor dat geld had je <b>' + num0.format(n) + '</b> ' + (n === 1 && it[2] ? it[2] : it[0]) + '.</li>';
+      });
+      vd += '<li>Op de fiets kost het <b>€ 0</b>. Wel even je regenjas pakken.</li>';
+      vd += '</ul>';
+    }
+    vd += '<div class="ctx">' + contextText() + '</div>';
+    $("verdict").innerHTML = vd;
+    $("ctaHead").textContent = total > 0
+      ? "Liever " + eur0.format(total) + " aan iets leukers uitgeven?"
+      : "Gratis, maar je buren betalen wel.";
+  }
+
+  function line(a, b) {
+    return '<div class="line"><span>' + a + '</span><span>' + b + '</span></div>';
+  }
+
+  function shareText() {
+    var sc = SCENARIOS[state.s], r = calc();
+    var t = sc.title + " in Utrecht zone " + state.zone + " kost vanaf 2027 " + eur.format(r.net) + " aan parkeergeld";
+    if (state.freq > 1) t += ", " + eur.format(r.year) + " per jaar";
+    t += ". In 2026 was dat " + eur.format(state.freq > 1 ? r.yearOld : r.old) + ". Reken het zelf uit:";
+    return t;
+  }
+
+  // Begintijden 08.00 tot 22.30
+  (function fillStart() {
+    var sel = $("start"), h;
+    for (h = 8; h <= 22.5; h += 0.5) {
+      var o = document.createElement("option");
+      o.value = String(h); o.textContent = fmtTime(h);
+      sel.appendChild(o);
+    }
+  })();
+
+  document.querySelectorAll(".tab").forEach(function (t) {
+    t.addEventListener("click", function () { load(t.dataset.s); });
+  });
+  document.querySelectorAll("#zoneSeg button").forEach(function (b) {
+    b.addEventListener("click", function () { state.zone = b.dataset.z; syncForm(); render(); });
+  });
+  $("cars").addEventListener("input", function (e) { state.cars = +e.target.value; render(); });
+  $("dur").addEventListener("input", function (e) { state.dur = +e.target.value; render(); });
+  $("freq").addEventListener("input", function (e) { state.freq = +e.target.value; render(); });
+  $("start").addEventListener("change", function (e) { state.start = +e.target.value; render(); });
+  $("disc").addEventListener("change", function (e) { state.disc = e.target.checked; render(); });
+  ["A1", "A2"].forEach(function (z) {
+    var el = $("r" + z);
+    el.value = rates[z].toFixed(2);
+    el.addEventListener("input", function () {
+      var v = parseFloat(String(el.value).replace(",", "."));
+      rates[z] = isFinite(v) && v >= 0 ? v : 0;
+      render();
+    });
+  });
+  $("resetBtn").addEventListener("click", function () { load(state.s); });
+  $("shareBtn").addEventListener("click", function () {
+    var text = shareText(), url = "https://visitebelasting.nl/";
+    var done = function (msg) { $("toast").textContent = msg; setTimeout(function () { $("toast").textContent = ""; }, 2500); };
+    if (navigator.share) {
+      navigator.share({ title: "Wat kost je zondag?", text: text, url: url }).catch(function () {});
+    } else if (navigator.clipboard) {
+      navigator.clipboard.writeText(text + " " + url).then(function () { done("Gekopieerd"); }, function () { done("Kopiëren lukte niet"); });
+    } else {
+      done("Delen lukt niet in deze browser");
+    }
+  });
+
+  // Toeter: alleen voor de lol, er wordt niets geteld of verstuurd.
+  (function () {
+    var horn = $("horn"), bubble = $("bubble"), sub = $("hornSub");
+    var presses = 0;
+    var jokes = [
+      "Getoeterd! De parkeerwachter keek even op.",
+      "De Domtoren heeft je gehoord.",
+      "Rustig aan, het is zondag.",
+      "Toet toet. Dat kost niks, parkeren wel.",
+      "De buren zijn nu ook wakker. Laat ze de petitie tekenen."
+    ];
+    function beep() {
+      try {
+        var AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return;
+        var ctx = new AC(), t = ctx.currentTime;
+        [[0, 392], [0.18, 330]].forEach(function (n) {
+          var o = ctx.createOscillator(), g = ctx.createGain();
+          o.type = "square"; o.frequency.value = n[1];
+          g.gain.setValueAtTime(0.0001, t + n[0]);
+          g.gain.exponentialRampToValueAtTime(0.06, t + n[0] + 0.02);
+          g.gain.exponentialRampToValueAtTime(0.0001, t + n[0] + 0.16);
+          o.connect(g); g.connect(ctx.destination);
+          o.start(t + n[0]); o.stop(t + n[0] + 0.18);
+        });
+        setTimeout(function () { ctx.close(); }, 600);
+      } catch (e) {}
+    }
+    horn.addEventListener("click", function () {
+      beep();
+      horn.classList.remove("shake"); void horn.offsetWidth; horn.classList.add("shake");
+      bubble.textContent = jokes[presses % jokes.length];
+      presses++;
+      sub.textContent = "Nog een keer";
+    });
+  })();
+
+  // Thema
+  $("themeBtn").addEventListener("click", function () {
+    var root = document.documentElement;
+    var cur = root.getAttribute("data-theme");
+    var dark = cur ? cur === "dark" : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var next = dark ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("zondag-theme", next); } catch (e) {}
+  });
+  try {
+    var saved = localStorage.getItem("zondag-theme");
+    if (saved) document.documentElement.setAttribute("data-theme", saved);
+  } catch (e) {}
+
+  load("feest");
+})();
+</script>
+</body>
+</html>
