@@ -501,8 +501,8 @@ footer ul { padding-left: 18px; }
       discAllowed: true, disc: true, zone: "A2",
       receiptTitle: "VERJAARDAG",
       items: [
-        ["grote slagroomtaarten (12 personen)", 18],
-        ["zakken chips", 2]
+        ["grote slagroomtaarten (12 personen)", 18, "grote slagroomtaart (12 personen)"],
+        ["zakken chips", 2, "zak chips"]
       ]
     },
     kerk: {
@@ -541,7 +541,7 @@ footer ul { padding-left: 18px; }
       discAllowed: true, disc: true, zone: "A2",
       receiptTitle: "ZONDAGSE VISITE",
       items: [
-        ["boeketten uit de supermarkt", 20]
+        ["boeketten uit de supermarkt", 20, "boeket uit de supermarkt"]
       ]
     }
   };
@@ -552,7 +552,6 @@ footer ul { padding-left: 18px; }
   var $ = function (id) { return document.getElementById(id); };
   var eur = new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR" });
   var eur0 = new Intl.NumberFormat("nl-NL", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
-  var num1 = new Intl.NumberFormat("nl-NL", { maximumFractionDigits: 1 });
   var num0 = new Intl.NumberFormat("nl-NL", { maximumFractionDigits: 0 });
 
   function fmtTime(h) {
@@ -699,10 +698,11 @@ footer ul { padding-left: 18px; }
     if (total > 0) {
       vd += '<ul>';
       sc.items.forEach(function (it) {
-        var n = total / it[1];
-        vd += '<li>Voor dat geld had je <b>' + (n < 10 ? num1.format(n) : num0.format(n)) + '</b> ' + it[0] + '.</li>';
+        var n = Math.floor(total / it[1]);
+        if (n < 1) return;
+        vd += '<li>Voor dat geld had je <b>' + num0.format(n) + '</b> ' + (n === 1 && it[2] ? it[2] : it[0]) + '.</li>';
       });
-      vd += '<li>Op de fiets kost het <b>€ 0,00</b>. Wel even je regenjas pakken.</li>';
+      vd += '<li>Op de fiets kost het <b>€ 0</b>. Wel even je regenjas pakken.</li>';
       vd += '</ul>';
     }
     vd += '<div class="ctx">' + contextText() + '</div>';
