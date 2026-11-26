@@ -858,10 +858,6 @@ footer li + li { margin-top: 10px; }
     if (r.yearOld > 0 && extra > 0.005) {
       rc += '<div class="delta">' + L("Dat is ", "Da's ") + eur.format(extra) + (state.freq > 1 ? ' per jaar' : '') + ' meer dan in 2026.</div>';
     }
-    rc += '<hr>';
-    rc += line("Gezelligheid", "€ 0,00");
-    rc += line("Zondagsrust", L("uitverkocht", "op, foetsie"));
-    rc += line("Peiling 2017, rayons tegen", "7 van 7");
     rc += '<div class="rfoot" aria-hidden="true"><div class="barcode"></div><div class="stamp">' + (r.net === 0 ? 'Gratis' : T(sc, "stamp")) + '</div></div>';
     rc += '<div class="thanks">' + L("Bedankt voor uw bezoek. Kom gauw weer. Vanaf 09.00 uur.", "Bedankt, hè. Kom gauw weer. Liefst voor 09.00 uur.") + '</div>';
     $("receipt").innerHTML = rc;
