@@ -16,3 +16,7 @@ De deelknop maakt een link met de invoer erin (bijvoorbeeld `?s=kerk&z=A1&a=1&t=
 - Bedrag = betaalde uren binnen het venster × tarief × aantal auto's × keer per jaar.
 
 Geen officiële berekening en niet van de gemeente Utrecht.
+
+## Plat Uteregs
+
+Met de knop bovenaan wissel je alle teksten tussen gewoon Nederlands en plat Uteregs. De keuze wordt in de browser onthouden en gaat mee in een gedeelde link (`&taal=utr`). Bedragen, feiten, namen van buurten en titels van bronnen blijven gelijk. De vertaling is een benadering van het dialect, geen officiële spelling.
