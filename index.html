@@ -535,7 +535,7 @@ footer li + li { margin-top: 10px; }
   </section>
 
   <footer>
-    <p data-i18n="disclaimer"><b>Dit is een ludieke rekentool, geen officiële berekening.</b> Deze site is niet van de gemeente Utrecht en spreekt niet namens de gemeente. Het bonnetje is geen echte bon: je hoeft niets te betalen. Bedragen zijn een schatting: per auto, alleen binnen de betaaltijden, zonder grens op kortingsuren en zonder kosten van parkeerapps. Prijzen van taart, chips en bloemen zijn ronde middenprijzen uit supermarkten in november 2026. Ze verschillen per winkel en per week. Een postzegel kost € 1,40 (PostNL, 2026). Een eerste bewonersvergunning in zone A2 kost € 97,11 per kwartaal (gemeente Utrecht, 2026).</p>
+    <p data-i18n="disclaimer"><b>Dit is een ludieke rekentool, geen officiële berekening.</b> Deze site is niet van de gemeente Utrecht en spreekt niet namens de gemeente. Het bonnetje is geen echte bon: je hoeft niets te betalen. Bedragen zijn een schatting: per auto, alleen binnen de betaaltijden, zonder grens op kortingsuren en zonder kosten van parkeerapps. Prijzen van taart, chips en bloemen zijn ronde middenprijzen uit supermarkten in november 2026. Ze verschillen per winkel en per week. Een postzegel kost € 1,40 (PostNL, 2026). Een eerste bewonersvergunning kost € 164,34 per kwartaal in zone A1 en € 97,11 in zone A2 (gemeente Utrecht, 2026).</p>
     <p><button class="themebtn" id="themeBtn" type="button">Licht / donker</button></p>
     <p data-i18n="bronnen">Bronnen:</p>
     <ul>
@@ -563,6 +563,8 @@ footer li + li { margin-top: 10px; }
     neu: { A1: [9, 23], A2: [9, 23] }
   };
   var DEFAULT_RATES = { A1: 8.01, A2: 6.94 };
+  // Eerste bewonersvergunning per kwartaal, gemeente Utrecht 2026.
+  var VERGUNNING = { A1: 164.34, A2: 97.11 };
 
   var SCENARIOS = {
     feest: {
@@ -580,13 +582,13 @@ footer li + li { margin-top: 10px; }
         carsHint: "Tel auto's, nie de mense. Ome en tante in één auto is één auto. Same rije is ut nieuwe kado.",
         freqLabel: "Verjaardage bij je thuis per jaor", durLabel: "Hoe lang duurt ut feestsjie?",
         stamp: "Lang zal je betaole",
-        items: [["groate slagroomtaorte (12 mân)", 18, "groate slagroomtaort (12 mân)"], ["zakke chips", 2, "zak chips"], ["postzegels voor de uitnodiginge", 1.40, "postzegel voor een uitnodiging"], ["kwartaole een bewonersvergunning in A2", 97.11, "kwartaol een bewonersvergunning in A2", "betaole"]]
+        items: [["groate slagroomtaorte (12 mân)", 18, "groate slagroomtaort (12 mân)"], ["zakke chips", 2, "zak chips"], ["postzegels voor de uitnodiginge", 1.40, "postzegel voor een uitnodiging"], ["kwartaole een bewonersvergunning in {zone}", "VG", "kwartaol een bewonersvergunning in {zone}", "betaole"]]
       },
       items: [
         ["grote slagroomtaarten (12 personen)", 18, "grote slagroomtaart (12 personen)"],
         ["zakken chips", 2, "zak chips"],
         ["postzegels voor uitnodigingen", 1.40, "postzegel voor een uitnodiging"],
-        ["kwartalen een bewonersvergunning in A2", 97.11, "kwartaal een bewonersvergunning in A2", "betalen"]
+        ["kwartalen een bewonersvergunning in {zone}", "VG", "kwartaal een bewonersvergunning in {zone}", "betalen"]
       ]
     },
     kerk: {
@@ -603,11 +605,11 @@ footer li + li { margin-top: 10px; }
         carsLabel: "Auto's van de kerkgangers",
         carsHint: "Op 1 voor je eige auto, of schuif door voor de hele gemeente.",
         freqLabel: "Zondage per jaor", durLabel: "Dienst, bakkie en nakletse",
-        items: [["keer € 2 in de collectezak", 2, "keer € 2 in de collectezak", "doen"], ["kwartaole een bewonersvergunning in A2", 97.11, "kwartaol een bewonersvergunning in A2", "betaole"]]
+        items: [["keer € 2 in de collectezak", 2, "keer € 2 in de collectezak", "doen"], ["kwartaole een bewonersvergunning in {zone}", "VG", "kwartaol een bewonersvergunning in {zone}", "betaole"]]
       },
       items: [
         ["keer € 2 in de collectezak", 2, "keer € 2 in de collectezak", "doen"],
-        ["kwartalen een bewonersvergunning in A2", 97.11, "kwartaal een bewonersvergunning in A2", "betalen"]
+        ["kwartalen een bewonersvergunning in {zone}", "VG", "kwartaal een bewonersvergunning in {zone}", "betalen"]
       ]
     },
     oma: {
@@ -624,12 +626,12 @@ footer li + li { margin-top: 10px; }
         carsLabel: "Auto's voor de deur",
         carsHint: "Komt opa ook, in z'n eige auto? Dan zijn ut d'r twee. Eén visite, twee keer betaole.",
         freqLabel: "Keer per jaor", durLabel: "Hoe lang blijft oma?",
-        items: [["bosse bloeme voor oma", 20, "bos bloeme voor oma"], ["kaartjes naor oma (postzegel € 1,40)", 1.40, "kaartje naor oma (postzegel € 1,40)", "sture"], ["kwartaole een bewonersvergunning in A2", 97.11, "kwartaol een bewonersvergunning in A2", "betaole"]]
+        items: [["bosse bloeme voor oma", 20, "bos bloeme voor oma"], ["kaartjes naor oma (postzegel € 1,40)", 1.40, "kaartje naor oma (postzegel € 1,40)", "sture"], ["kwartaole een bewonersvergunning in {zone}", "VG", "kwartaol een bewonersvergunning in {zone}", "betaole"]]
       },
       items: [
         ["bossen bloemen voor oma", 20, "bos bloemen voor oma"],
         ["kaartjes naar oma (postzegel € 1,40)", 1.40, "kaartje naar oma (postzegel € 1,40)", "sturen"],
-        ["kwartalen een bewonersvergunning in A2", 97.11, "kwartaal een bewonersvergunning in A2", "betalen"]
+        ["kwartalen een bewonersvergunning in {zone}", "VG", "kwartaal een bewonersvergunning in {zone}", "betalen"]
       ]
     }
   };
@@ -672,7 +674,7 @@ footer li + li { margin-top: 10px; }
     tegenUl: '<li>Eind 2017 vroeg de gemeente ut zelf, met een <a href="https://utrecht.bestuurlijkeinformatie.nl/Document/View/6cdf4239-6a76-451a-87da-1e31fb8f7ae7" target="_blank" rel="noopener">peiling in acht parkeerrayons rond de binnestad</a>. In alle zeve rayons met een geldige uitslag was de meerderheid tegen betaald parkere op zondag. In ut achtste dede te weinig mense mee. De zondag bleef toen gratis.</li><li>Een bewoner uit Nieuw Engeland is een <a href="https://www.petities.com/houd_utrecht_bereikbaar_en_leefbaar_voor_iedereen" target="_blank" rel="noopener">petitie</a> begonne. Op 26 november 2026 stonde d\'r ruim 1.700 handtekeninge onder.</li><li>Veertien kerke in de binnestad hebbe de burgemeester per brief om een oplossing gevraagd.</li><li>Op 12 november 2026 hebbe twee amendemente ut nie gehaald: één voor een vrije zondagochtend en één om een uitzondering voor religieuze instellinge te onderzoeke.</li>',
     wetenH3: "Goed om te wete",
     wetenUl: "<li>Voor mantelzorg, thuiszorg en kraamzorg is de korting in de hele stad 99%, as je de regeling gebruikt. Zorg is dus bijna gratis. Gezelligheid nie.</li><li>Ga je naar de kerk? Dan ben je geen visite van een bewoner. Dan krijg je dus geen korting.</li><li>Na 23.00 uur en voor 09.00 uur parkeer je gratis. Een nachtelijk feestsjie wordt dus vanzelf goedkoper.</li>",
-    disclaimer: "<b>Dit is een ludieke rekentool, geen officiële berekening.</b> Deze site is nie van de gemeente Utrecht en praat nie namens de gemeente. Ut bonnetsjie is geen echte bon: je hoeft niks te betaole. De bedrage zijn een schatting: per auto, alleen binne de betaoltijde, zonder grens op kortingsure en zonder koste van parkeerapps. Prijze van taort, chips en bloeme zijn ronde middeprijze uit supermarkte in november 2026. Ze verschille per winkel en per week. Een postzegel kost € 1,40 (PostNL, 2026). Een eerste bewonersvergunning in zone A2 kost € 97,11 per kwartaal (gemeente Utrecht, 2026).",
+    disclaimer: "<b>Dit is een ludieke rekentool, geen officiële berekening.</b> Deze site is nie van de gemeente Utrecht en praat nie namens de gemeente. Ut bonnetsjie is geen echte bon: je hoeft niks te betaole. De bedrage zijn een schatting: per auto, alleen binne de betaoltijde, zonder grens op kortingsure en zonder koste van parkeerapps. Prijze van taort, chips en bloeme zijn ronde middeprijze uit supermarkte in november 2026. Ze verschille per winkel en per week. Een postzegel kost € 1,40 (PostNL, 2026). Een eerste bewonersvergunning kost € 164,34 per kwartaal in zone A1 en € 97,11 in zone A2 (gemeente Utrecht, 2026).",
     bronnen: "Bronne (in gewoon Nederlands):"
   };
   var ORIG = new Map();
@@ -874,9 +876,10 @@ footer li + li { margin-top: 10px; }
     if (total > 0) {
       vd += '<ul>';
       T(sc, "items").forEach(function (it) {
-        var n = Math.floor(total / it[1]);
+        var price = it[1] === "VG" ? VERGUNNING[state.zone] : it[1];
+        var n = Math.floor(total / price);
         if (n < 1) return;
-        vd += '<li>' + L("Voor dat geld had je ", "Voor da geld had je ") + '<b>' + num0.format(n) + '</b> ' + (n === 1 && it[2] ? it[2] : it[0]) + L(" kunnen ", " kenne ") + (it[3] || L("kopen", "kope")) + '.</li>';
+        vd += '<li>' + L("Voor dat geld had je ", "Voor da geld had je ") + '<b>' + num0.format(n) + '</b> ' + (n === 1 && it[2] ? it[2] : it[0]).replace("{zone}", state.zone) + L(" kunnen ", " kenne ") + (it[3] || L("kopen", "kope")) + '.</li>';
       });
       vd += '</ul>';
     }
