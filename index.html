@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Wat kost je zondag?</title>
+<title>Wat kost jouw zondag?</title>
 <meta name="description" content="Ludieke rekentool: wat kost parkeren op zondag in Utrecht zone A1 en A2 vanaf 1 januari 2027, voor je verjaardag, kerkbezoek of oma op bezoek.">
 <link rel="canonical" href="https://visitebelasting.nl/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://visitebelasting.nl/">
-<meta property="og:title" content="Wat kost je zondag?">
+<meta property="og:title" content="Wat kost jouw zondag?">
 <meta property="og:description" content="Reken uit wat je verjaardag, kerkdienst of zondagse visite kost nu je in Utrecht ook op zondag betaalt voor parkeren.">
 <meta property="og:locale" content="nl_NL">
 <meta property="og:image" content="https://visitebelasting.nl/og.png">
@@ -405,7 +405,7 @@ footer li + li { margin-top: 10px; }
       <div class="psign" aria-hidden="true">P</div>
       <div>
         <span class="pill" data-i18n="pill">Utrecht · zone A1 en A2</span>
-        <h1 data-i18n="h1">Wat kost je zondag?</h1>
+        <h1 data-i18n="h1">Wat kost jouw zondag?</h1>
       </div>
     </div>
   </header>
@@ -644,7 +644,7 @@ footer li + li { margin-top: 10px; }
   // Namen van buurten en titels van bronnen blijven zoals ze zijn.
   var UTR = {
     pill: "Utreg · zone A1 en A2",
-    h1: "Wa kost je zondag?",
+    h1: "Wa kost jouw zondag?",
     slogan: "Visite is geen verdienmodel, jochie!",
     lede: "Vanaf 3 januari 2027 betaol je in de binnestad en de wijke d'romheen ook op zondag voor ut parkere. Van 09.00 tot 23.00 uur.",
     punch: '<span>Bakkie: gratis.</span> <span>Taort: zelluf gebakke.</span> <span class="tag">Parkere: vanaf € 6,94 per uur.</span>',
@@ -998,7 +998,7 @@ footer li + li { margin-top: 10px; }
     var text = shareText(), url = stateUrl();
     var done = function (msg) { $("toast").textContent = msg; setTimeout(function () { $("toast").textContent = ""; }, 2500); };
     if (navigator.share) {
-      navigator.share({ title: "Wat kost je zondag?", text: text, url: url }).catch(function (e) {
+      navigator.share({ title: "Wat kost jouw zondag?", text: text, url: url }).catch(function (e) {
         if (!e || e.name !== "AbortError") done("Delen lukte niet");
       });
     } else if (navigator.clipboard) {
