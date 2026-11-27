@@ -491,7 +491,7 @@ footer li + li { margin-top: 10px; }
       <p id="srSum" class="sr-only" aria-live="polite"></p>
       <div class="verdict" id="verdict"></div>
       <div class="actions">
-        <button class="btn share" id="shareBtn" type="button">Stuur je bonnetje naar de familie-app</button>
+        <button class="btn share" id="shareBtn" type="button">Stuur je bonnetje door</button>
         <span class="toast" id="toast" role="status"></span>
       </div>
       <div class="cta">
@@ -792,11 +792,18 @@ footer li + li { margin-top: 10px; }
                "Gefeliciteerd! De gemeente viert gezellig mee: " + eur0.format(n) + ".");
     }
     if (s === "kerk") {
+      if (state.cars > 1) {
+        if (y >= 10000) return L("De kerkgemeente betaalt samen " + eur0.format(y) + " per jaar. Dat is geen collecte meer, dat is een begroting.",
+                                 "De kerkgemeente betaolt same " + eur0.format(y) + " per jaor. Da's geen collecte meer, da's een begroting.");
+        if (y >= 500) return L("De kerkgemeente betaalt samen " + eur0.format(y) + " per jaar om naar de kerk te gaan. Een flinke collecte, alleen niet voor de kerk.",
+                               "De kerkgemeente betaolt same " + eur0.format(y) + " per jaor om naor de kerk te gaon. Flinke collecte, maor nie voor de kerk.");
+        return L("Met " + state.cars + " auto's betaal je samen " + eur0.format(y) + " per jaar. Aan de automaat, niet aan de collecte.",
+                 "Met " + state.cars + " auto's betaol je same " + eur0.format(y) + " per jaor. An de automaat, nie an de collecte.");
+      }
       if (y < 200) return L("Een kleine offerande aan de parkeerautomaat.", "Een klein offertje an de parkeerautomaat.");
-      if (y < 1000) return L("Trouw naar de kerk kost je straks " + eur0.format(y) + " per jaar. Aan de automaat, niet aan de collecte.",
-                             "Trouw naor de kerk kost je straks " + eur0.format(y) + " per jaor. An de automaat, nie an de collecte.");
-      if (state.cars > 1) return L("De kerkgemeente betaalt samen " + eur0.format(y) + " per jaar om naar de kerk te gaan. Een flinke collecte, alleen niet voor de kerk.",
-                                   "De kerkgemeente betaolt same " + eur0.format(y) + " per jaor om naor de kerk te gaon. Flinke collecte, maor nie voor de kerk.");
+      var trouw = state.freq >= 40;
+      if (y < 1000) return L((trouw ? "Trouw naar de kerk" : "Naar de kerk") + " kost je straks " + eur0.format(y) + " per jaar. Aan de automaat, niet aan de collecte.",
+                             (trouw ? "Trouw naor de kerk" : "Naor de kerk") + " kost je straks " + eur0.format(y) + " per jaor. An de automaat, nie an de collecte.");
       return L("Jij alleen betaalt " + eur0.format(y) + " per jaar. Dat is geen collecte meer, dat is een abonnement.",
                "Jij alleen betaolt " + eur0.format(y) + " per jaor. Da's geen collecte meer, da's een abonnement.");
     }
@@ -882,9 +889,20 @@ footer li + li { margin-top: 10px; }
       : L("Gratis, deze keer. Tussen 09.00 en 23.00 uur betaal je wel.", "Gratis, deze keer. Tusse 09.00 en 23.00 uur betaol je wel.");
     $("ctaBody").textContent = contextText() + L(" Ruim 1.700 mensen tekenden de petitie al (stand 26 november 2026). Jij ook?", " Ruim 1.700 mense hebbe de petitie al getekend (stand 26 november 2026). Jij ook?");
     var shown = state.freq > 1 ? r.year : r.net;
-    $("shareBtn").textContent = L("Stuur je bonnetje naar de familie-app (", "Gooi je bonnetsjie in de familie-app (") + eur0.format(shown) + (state.freq > 1 ? L(" per jaar", " per jaor") : "") + ")";
+    $("shareBtn").textContent = shareLabel() + " (" + eur0.format(shown) + (state.freq > 1 ? L(" per jaar", " per jaor") : "") + ")";
     $("sbAmt").textContent = eur0.format(shown);
     $("sbSub").textContent = (state.freq > 1 ? L("per jaar", "per jaor") : "deze zondag") + " · bonnetje ↓";
+  }
+
+  // Deelknop past bij het scenario en het aantal auto's.
+  function shareLabel() {
+    if (state.s === "kerk") {
+      return state.cars > 1
+        ? L("Stuur dit bonnetje naar de kerkenraad", "Stuur dit bonnetsjie naor de kerkeraad")
+        : L("Stuur je bonnetje naar de kerkgroep-app", "Stuur je bonnetsjie naor de kerkgroep-app");
+    }
+    if (state.s === "oma") return L("Stuur het bonnetje naar oma", "Stuur ut bonnetsjie naor oma");
+    return L("Stuur je bonnetje naar de familie-app", "Gooi je bonnetsjie in de familie-app");
   }
 
   function line(a, b) {
@@ -923,8 +941,11 @@ footer li + li { margin-top: 10px; }
     switch (state.s) {
       case "feest": return L("Mijn visite betaalt vanaf 2027 " + eur0.format(r.net) + " parkeergeld om mij in Utrecht te feliciteren. Wat kost jouw verjaardag?",
                              "Me visite betaolt vanaf 2027 " + eur0.format(r.net) + " parkeergeld om mij in Utreg te feliciteren. Wa kost jouw verjaardag?");
-      case "kerk": return L("Naar de kerk kost me vanaf 2027 " + y + per + " aan parkeergeld in Utrecht. Amen. Teken je mee?",
-                            "Naor de kerk kost mij vanaf 2027 " + y + per + " aan parkeergeld in Utreg. Amen. Teken je mee?");
+      case "kerk":
+        if (state.cars > 1) return L("Onze kerkgemeente betaalt vanaf 2027 samen " + y + per + " aan parkeergeld in Utrecht. Amen. Teken je mee?",
+                                     "Onze kerkgemeente betaolt vanaf 2027 same " + y + per + " an parkeergeld in Utreg. Amen. Teken je mee?");
+        return L("Naar de kerk kost me vanaf 2027 " + y + per + " aan parkeergeld in Utrecht. Amen. Teken je mee?",
+                 "Naor de kerk kost mij vanaf 2027 " + y + per + " an parkeergeld in Utreg. Amen. Teken je mee?");
       case "oma": return L("Mijn oma betaalt vanaf 2027 " + y + per + " parkeergeld om mij in Utrecht te zien. Wat kost die van jou?",
                            "Me oma betaolt vanaf 2027 " + y + per + " parkeergeld om mij in Utreg te zien. Wa kost die van jou?");
     }
